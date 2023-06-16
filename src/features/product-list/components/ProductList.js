@@ -1,43 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-const products = [
-    {
-        id: 1,
-        name: 'Basic Tee',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Black',
-    }, {
-        id: 2,
-        name: 'Basic Tee',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Black',
-    }, {
-        id: 3,
-        name: 'Basic Tee',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Black',
-    }, {
-        id: 4,
-        name: 'Basic Tee',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Black',
-    },
-    // More products...
-]
+import { getProducts } from '../productSlice';
+
+
+
 
 export default function ProductList() {
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.products);
+    const status = useSelector((state) => state.products.status)
+
+    useEffect(() => {
+        dispatch(getProducts())
+    }, []);
+
+
+    if (status === 'loading' || products === undefined) {
+        return <div style={
+            {
+                display: 'flex',
+                justifyContent: 'center',
+            }
+        }>
+            <div
+                className="flex h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                >Loading...</span>
+            </div>
+        </div>
+    }
+
     return (
 
         <div className="bg-white">
@@ -50,20 +45,20 @@ export default function ProductList() {
                             <div key={product.id} className="group relative">
                                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                                     <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
+                                        src={product.thumbnail}
+                                        alt={product.title}
                                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                     />
                                 </div>
                                 <div className="mt-4 flex justify-between">
                                     <div>
                                         <h3 className="text-sm text-gray-700">
-                                            <a href={product.href}>
+                                            <Link to='/product-detail'>
                                                 <span aria-hidden="true" className="absolute inset-0" />
-                                                {product.name}
-                                            </a>
+                                                {product.title}
+                                            </Link>
                                         </h3>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                        <p className="mt-1 text-sm text-gray-500">{product.rating}</p>
                                     </div>
                                     <p className="text-sm font-medium text-gray-900">{product.price}</p>
                                 </div>
