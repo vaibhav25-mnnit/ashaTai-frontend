@@ -9,7 +9,6 @@ import {
 
 import ProductList from './ProductList'
 import { sortProducts, getFilteredProducts } from '../productSlice'
-
 const sortOptions = [
     { name: 'Best Rating', id: 'rating', order: 'desc', current: false },
     { name: 'Price: Low to High', id: 'price', order: 'asc', current: false },
@@ -206,6 +205,8 @@ export default function Products() {
 
     const dispatch = useDispatch();
 
+
+    //function to handle the sort functionality
     const sP = (option, order) => {
 
         let sortedP = [];
@@ -248,14 +249,24 @@ export default function Products() {
         dispatch(sortProducts(sortedP))
     }
 
-    const handleFilterChange = (section, option) => {
-        console.log(option.value + " from " + section.id + " is checked...");
+    //function to handle the filter functionality 
+    const handleFilterChange = (e, section, option) => {
 
 
-        const newFilter = [...filter, { section: section.id, value: option.value }];
-        setFilter(newFilter);
+        //if the checkbox is checked then add into filter array
+        if (e.target.checked) {
+            console.log(option.value + " from " + section.id + " is checked...");
+            const newFilter = [...filter, { section: section.id, value: option.value }];
+            setFilter(newFilter);
+            dispatch(getFilteredProducts(newFilter));
+        } else {
+            //if the checkbox is un-checked then remove from filter array
+            console.log(option.value + " from " + section.id + " is un-checked...");
+            const newFilter = filter.filter(fil => fil.value !== option.value);
+            setFilter(newFilter);
+            dispatch(getFilteredProducts(newFilter));
+        }
 
-        dispatch(getFilteredProducts(newFilter));
     }
 
     return (
@@ -324,13 +335,16 @@ export default function Products() {
                                                                 {section.options.map((option, optionIdx) => (
                                                                     <div key={option.value} className="flex items-center">
                                                                         <input
+                                                                            style={{
+                                                                                'cursor': 'pointer'
+                                                                            }}
                                                                             id={`filter-mobile-${section.id}-${optionIdx}`}
                                                                             name={`${section.id}[]`}
                                                                             defaultValue={option.value}
                                                                             type="checkbox"
                                                                             defaultChecked={option.checked}
-                                                                            onChange={async () => {
-                                                                                await handleFilterChange(section, option);
+                                                                            onChange={(e) => {
+                                                                                handleFilterChange(e, section, option);
                                                                             }}
                                                                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                         />
@@ -385,7 +399,9 @@ export default function Products() {
                                             {sortOptions.map((option) => (
                                                 <Menu.Item key={option.name}>
                                                     {({ active }) => (
-                                                        <div onClick={(e) => {
+                                                        <div style={{
+                                                            'cursor': 'pointer'
+                                                        }} onClick={(e) => {
                                                             sP(option.id, option.order)
                                                         }}
                                                             className={classNames(
@@ -448,13 +464,16 @@ export default function Products() {
                                                         {section.options.map((option, optionIdx) => (
                                                             <div key={option.value} className="flex items-center">
                                                                 <input
+                                                                    style={{
+                                                                        'cursor': 'pointer'
+                                                                    }}
                                                                     id={`filter-${section.id}-${optionIdx}`}
                                                                     name={`${section.id}[]`}
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
-                                                                    onChange={async () => {
-                                                                        await handleFilterChange(section, option);
+                                                                    onChange={(e) => {
+                                                                        handleFilterChange(e, section, option);
                                                                     }}
                                                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                 />
@@ -482,89 +501,7 @@ export default function Products() {
                     </section>
 
                     {/* Pagination */}
-                    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-                        <div className="flex flex-1 justify-between sm:hidden">
-                            <a
-                                href="#"
-                                className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                            >
-                                Previous
-                            </a>
-                            <a
-                                href="#"
-                                className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                            >
-                                Next
-                            </a>
-                        </div>
-                        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                            <div>
-                                <p className="text-sm text-gray-700">
-                                    Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-                                    <span className="font-medium">97</span> results
-                                </p>
-                            </div>
-                            <div>
-                                <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                                    <a
-                                        href="#"
-                                        className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                                    >
-                                        <span className="sr-only">Previous</span>
-                                        <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-                                    </a>
-                                    {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-                                    <a
-                                        href="#"
-                                        aria-current="page"
-                                        className="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        1
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                                    >
-                                        2
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                                    >
-                                        3
-                                    </a>
-                                    <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-                                        ...
-                                    </span>
-                                    <a
-                                        href="#"
-                                        className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                                    >
-                                        8
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                                    >
-                                        9
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                                    >
-                                        10
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                                    >
-                                        <span className="sr-only">Next</span>
-                                        <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-                                    </a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
+                    <Pagination />
                 </main>
             </div>
         </div>
@@ -572,3 +509,67 @@ export default function Products() {
 }
 
 
+
+
+//pagination component 
+function Pagination() {
+    return (
+        <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+            <div className="flex flex-1 justify-between sm:hidden">
+                <div
+                    className="cursor-pointer relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                    Previous
+                </div>
+                <div
+                    className="cursor-pointer relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                    Next
+                </div>
+            </div>
+            <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                <div>
+                    <p className="text-sm text-gray-700 ">
+                        Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
+                        <span className="font-medium">97</span> results
+                    </p>
+                </div>
+                <div>
+                    <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                        <div
+                            className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                        >
+                            <span className="sr-only">Previous</span>
+                            <ChevronLeftIcon className="h-5 w-5 cursor-pointer" aria-hidden="true" />
+                        </div>
+                        <div
+                            aria-current="page"
+                            className="cursor-pointer relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            1
+                        </div>
+                        <div
+                            className="cursor-pointer relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                        >
+                            2
+                        </div>
+
+                        <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
+                            ...
+                        </span>
+                        <div
+                            className="cursor-pointer relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                        >
+                            10
+                        </div>
+                        <div
+                            className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                        >
+                            <span className="sr-only">Next</span>
+                            <ChevronRightIcon className="cursor-pointer h-5 w-5" aria-hidden="true" />
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>)
+}
