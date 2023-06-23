@@ -1,11 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, Redirect } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux';
+import { createUser, selectError, selectUser } from '../authSlice';
+
 function Signup() {
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser)
+    const message = useSelector(selectError)
+
+
+    //handle form submission
+    const onSubmit = async (data) => {
+        await dispatch(createUser({ name: data.name, email: data.email, password: data.password, imageUrl: 'https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf' }));
+        console.log(user)
+        console.log(message)
+    }
+
+
     return <>
+        {message && <p>{message}</p>}
+
+        {user && <Navigate to='/' replace='true' />}
+
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <Link to='/'>
-
                     <img
                         className="mx-auto h-20 w-20"
                         src={require('../../../images/download.webp')}
@@ -18,23 +41,48 @@ function Signup() {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+
+                <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6" >
+
+                    {/* Name */}
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                            Name
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                {...register("name", { required: "Name is required" })}
+                                id="name"
+                                type="text"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                        {errors.name && <span className='text-red-500'>{errors.name.message}</span>}
+                    </div>
+
+                    {/* E-mail */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                             Email address
                         </label>
                         <div className="mt-2">
                             <input
+                                {...register("email",
+                                    {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
+                                            message: 'Email is not Valid'
+                                        }
+                                    })}
                                 id="email"
-                                name="email"
                                 type="email"
-                                autoComplete="email"
-                                required
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
+                        {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
                     </div>
-
+                    {/* Password */}
                     <div>
                         <div className="flex items-center justify-between">
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -43,16 +91,32 @@ function Signup() {
                         </div>
                         <div className="mt-2">
                             <input
+                                {...register("password", {
+                                    required: "Password is required",
+
+                                    pattern: {
+                                        value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                                        message: "Password does not match below condition's"
+                                    }
+                                })}
                                 id="password"
-                                name="password"
                                 type="password"
-                                autoComplete="current-password"
-                                required
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
-                    </div>
 
+                        {errors.password && <span className='text-red-500'>{errors.password.message}</span>}
+                        <p>
+                            <b>
+                                password must contain
+                                <br />
+                                - at least 8 characters
+                                <br />
+                                - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
+                            </b>
+                        </p>
+                    </div>
+                    {/* Confirm-password */}
                     <div>
                         <div className="flex items-center justify-between">
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -61,13 +125,16 @@ function Signup() {
                         </div>
                         <div className="mt-2">
                             <input
-                                id="confirm-password"
-                                name="confirm-password"
-                                type="confirm-password"
-                                required
+                                {...register("confirmPassword", {
+                                    required: "Confirm Password is required",
+                                    validate: (value, formValues) => value === formValues.password || "passwords not matching"
+                                })}
+                                id="confirPassword"
+                                type="password"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
+                        {errors.confirmPassword && <span className='text-red-500'>{errors.confirmPassword.message}</span>}
                     </div>
 
                     <div>

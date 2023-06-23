@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css'
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
@@ -11,6 +11,7 @@ import {
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import PageDetailPage from './features/product-list/components/ProductDetail'
+import NotFound from './pages/NotFound'
 
 
 const router = createBrowserRouter([
@@ -30,8 +31,11 @@ const router = createBrowserRouter([
     path: '/checkout',
     element: <Checkout />
   }, {
-    path: '/product-detail',
+    path: '/product-detail/:id',
     element: <PageDetailPage />
+  }, {
+    path: '*',
+    element: <NotFound />
   }
 ]);
 

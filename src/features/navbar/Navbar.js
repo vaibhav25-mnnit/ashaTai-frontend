@@ -2,13 +2,10 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { selectUser } from '../auth/authSlice'
+import { useSelector } from 'react-redux'
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
+
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -18,7 +15,7 @@ const navigation = [
 const userNavigation = [
     { name: 'Your Profile', href: '#' },
     { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Sign out', href: '/' },
 ]
 
 function classNames(...classes) {
@@ -26,6 +23,12 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ title, children }) {
+    const currentuser = useSelector(selectUser)
+    const user = {
+        name: currentuser ? currentuser.name : "Guest",
+        imageUrl: currentuser ? currentuser.imageUrl : "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
+        email: currentuser ? currentuser.email : "guest@guest.com"
+    }
     return (
         <>
             <div className="min-h-full">
@@ -49,9 +52,9 @@ export default function Navbar({ title, children }) {
                                         <div className="hidden md:block">
                                             <div className="ml-10 flex items-baseline space-x-4">
                                                 {navigation.map((item) => (
-                                                    <a
+                                                    <Link
                                                         key={item.name}
-                                                        href={item.href}
+                                                        to={item.href}
                                                         className={classNames(
                                                             item.current
                                                                 ? 'bg-gray-900 text-white'
@@ -61,7 +64,7 @@ export default function Navbar({ title, children }) {
                                                         aria-current={item.current ? 'page' : undefined}
                                                     >
                                                         {item.name}
-                                                    </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </div>
@@ -79,7 +82,6 @@ export default function Navbar({ title, children }) {
                                             <span className="inline-flex items-center rounded-md mb-5 -ml-3 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                                                 5
                                             </span>
-
 
                                             {/* Profile dropdown */}
                                             <Menu as="div" className="relative ml-3">
@@ -102,21 +104,23 @@ export default function Navbar({ title, children }) {
                                                         {userNavigation.map((item) => (
                                                             <Menu.Item key={item.name}>
                                                                 {({ active }) => (
-                                                                    <a
-                                                                        href={item.href}
+                                                                    <Link
+                                                                        to={item.href}
                                                                         className={classNames(
                                                                             active ? 'bg-gray-100' : '',
                                                                             'block px-4 py-2 text-sm text-gray-700'
                                                                         )}
                                                                     >
                                                                         {item.name}
-                                                                    </a>
+                                                                    </Link>
                                                                 )}
                                                             </Menu.Item>
                                                         ))}
                                                     </Menu.Items>
                                                 </Transition>
+
                                             </Menu>
+                                            <p className='text-white ml-5'>Hello, {user.name}</p>
                                         </div>
                                     </div>
                                     <div className="-mr-2 flex md:hidden">
