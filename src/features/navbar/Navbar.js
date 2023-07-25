@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outl
 import { Link } from 'react-router-dom'
 import { selectUser } from '../auth/authSlice'
 import { useSelector } from 'react-redux'
-
+import { selectCartCount } from '../cart/cartSlice'
 
 
 const navigation = [
@@ -29,6 +29,8 @@ export default function Navbar({ title, children }) {
         imageUrl: currentuser ? currentuser.imageUrl : "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
         email: currentuser ? currentuser.email : "guest@guest.com"
     }
+    const cartCount =
+        useSelector(selectCartCount);
     return (
         <>
             <div className="min-h-full">
@@ -80,7 +82,7 @@ export default function Navbar({ title, children }) {
                                                 </button>
                                             </Link>
                                             <span className="inline-flex items-center rounded-md mb-5 -ml-3 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                                                5
+                                                {cartCount}
                                             </span>
 
                                             {/* Profile dropdown */}
@@ -172,7 +174,7 @@ export default function Navbar({ title, children }) {
                                             </button>
                                         </Link>
                                         <span className="inline-flex items-center rounded-md mb-5 -ml-3 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                                            5
+                                            {cartCount}
                                         </span>
                                     </div>
                                     <div className="mt-3 space-y-1 px-2">
@@ -205,6 +207,7 @@ export default function Navbar({ title, children }) {
                     </div>
                 </main>
             </div>
+
         </>
     )
 }

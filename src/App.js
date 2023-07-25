@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css'
+import React, { useEffect } from 'react';
+// import './App.css'
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -10,14 +10,17 @@ import {
 } from "react-router-dom";
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
-import PageDetailPage from './features/product-list/components/ProductDetail'
+import ProductDetailPage from './features/product-list/components/ProductDetail'
 import NotFound from './pages/NotFound'
-
+import Protected from './features/auth/components/Protected';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartItems } from './features/cart/cartSlice';
+import { selectUser } from './features/auth/authSlice';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Protected component={<Home />} />,
   }, {
     path: '/login',
     element: <LoginPage />
@@ -26,13 +29,13 @@ const router = createBrowserRouter([
     element: <SignupPage />
   }, {
     path: '/cart',
-    element: <CartPage />
+    element: <Protected component={<CartPage />} />
   }, {
     path: '/checkout',
-    element: <Checkout />
+    element: <Protected component={<Checkout />} />
   }, {
     path: '/product-detail/:id',
-    element: <PageDetailPage />
+    element: <Protected component={<ProductDetailPage />} />
   }, {
     path: '*',
     element: <NotFound />
@@ -40,9 +43,20 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+
+  const dispatch = useDispatch();
+  const logedInUser = useSelector(selectUser);
+
+
+  useEffect(() => {
+    if (logedInUser) {
+      dispatch(getCartItems(logedInUser.id))
+    }
+  }, [dispatch, logedInUser])
+
+
   return (
     <div>
-
       <RouterProvider router={router} />
     </div>
   )

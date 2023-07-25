@@ -15,7 +15,7 @@ const initialState = {
 export const getProducts = createAsyncThunk(
     'products/getProducts',
     async (page) => {
-        const res = await fetch(`http://localhost:8080/products?_page=${page}&_limit=${ITEMS_PER_PAGE}`);
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products?_page=${page}&_limit=${ITEMS_PER_PAGE}`);
         const d = await res.json();
         const totalProducts = await res.headers.get('X-total-Count')
 
@@ -36,12 +36,12 @@ export const getFilteredProducts = createAsyncThunk(
 
         // console.log(queryString)
         if ((queryString === "")) {
-            const res = await fetch(`http://localhost:8080/products?_page=1&_limit=10`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products?_page=1&_limit=10`);
             const d = await res.json();
             const totalProducts = await res.headers.get('X-total-Count')
             return { products: d, totalProducts: totalProducts };
         }
-        const res = await fetch(`http://localhost:8080/products?` + queryString)
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products?` + queryString)
         const d = await res.json();
         const totalProducts = await res.headers.get('X-total-Count')
         return { products: d, totalProducts: totalProducts };
@@ -53,7 +53,7 @@ export const getFilteredProducts = createAsyncThunk(
 export const getBrands = createAsyncThunk(
     'products/getBrands',
     async () => {
-        const res = await fetch(`http://localhost:8080/brands`);
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/brands`);
         const d = await res.json();
         return d;
     }
@@ -63,7 +63,7 @@ export const getBrands = createAsyncThunk(
 export const getCategories = createAsyncThunk(
     'products/getCategories',
     async () => {
-        const c = await fetch('http://localhost:8080/categories')
+        const c = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`)
         const d = await c.json();
 
         return d;
@@ -74,7 +74,7 @@ export const getCategories = createAsyncThunk(
 export const getSelectedProduct = createAsyncThunk(
     'products/getSelectedProduct',
     async (id) => {
-        const p = await fetch(`http://localhost:8080/products/${id}`);
+        const p = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products/${id}`);
         const d = p.json();
         return d;
     }

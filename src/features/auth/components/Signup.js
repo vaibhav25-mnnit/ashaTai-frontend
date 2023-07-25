@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Navigate, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser, selectError, selectUser } from '../authSlice';

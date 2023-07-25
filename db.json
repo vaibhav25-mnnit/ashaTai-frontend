@@ -1842,11 +1842,18 @@
   ],
   "users": [
     {
-      "name": "vaibhav",
+      "name": "Vaibhav Bagate",
       "email": "vb9822445937@gmail.com",
       "password": "Vaibhav123",
       "imageUrl": "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
       "id": 1
+    },
+    {
+      "name": "vb",
+      "email": "bagatevaibhav555@gmail.com",
+      "password": "Vaibhav123",
+      "imageUrl": "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
+      "id": 2
     }
   ],
   "brands": [
@@ -2341,6 +2348,118 @@
       "value": "lighting",
       "label": "lighting",
       "checked": false
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "items": [
+        {
+          "user": 1,
+          "quantity": 4,
+          "id": 4,
+          "title": "OPPOF19",
+          "description": "OPPO F19 is officially announced on April 2021.",
+          "price": 280,
+          "discountPercentage": 17.91,
+          "rating": 4.3,
+          "stock": 123,
+          "brand": "OPPO",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/4/1.jpg",
+            "https://i.dummyjson.com/data/products/4/2.jpg",
+            "https://i.dummyjson.com/data/products/4/3.jpg",
+            "https://i.dummyjson.com/data/products/4/4.jpg",
+            "https://i.dummyjson.com/data/products/4/thumbnail.jpg"
+          ]
+        },
+        {
+          "user": 1,
+          "quantity": 1,
+          "id": 3,
+          "title": "Samsung Universe 9",
+          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+          "price": 1249,
+          "discountPercentage": 15.46,
+          "rating": 4.09,
+          "stock": 36,
+          "brand": "Samsung",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/3/1.jpg"
+          ]
+        },
+        {
+          "user": 1,
+          "quantity": 1,
+          "id": 9,
+          "title": "Infinix INBOOK",
+          "description": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
+          "price": 1099,
+          "discountPercentage": 11.83,
+          "rating": 4.54,
+          "stock": 96,
+          "brand": "Infinix",
+          "category": "laptops",
+          "thumbnail": "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/9/1.jpg",
+            "https://i.dummyjson.com/data/products/9/2.png",
+            "https://i.dummyjson.com/data/products/9/3.png",
+            "https://i.dummyjson.com/data/products/9/4.jpg",
+            "https://i.dummyjson.com/data/products/9/thumbnail.jpg"
+          ]
+        },
+        {
+          "user": 1,
+          "quantity": 4,
+          "id": 24,
+          "title": "cereals muesli fruit nuts",
+          "description": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji",
+          "price": 46,
+          "discountPercentage": 16.8,
+          "rating": 4.94,
+          "stock": 113,
+          "brand": "fauji",
+          "category": "groceries",
+          "thumbnail": "https://i.dummyjson.com/data/products/24/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/24/1.jpg",
+            "https://i.dummyjson.com/data/products/24/2.jpg",
+            "https://i.dummyjson.com/data/products/24/3.jpg",
+            "https://i.dummyjson.com/data/products/24/4.jpg",
+            "https://i.dummyjson.com/data/products/24/thumbnail.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "items": [
+        {
+          "user": 2,
+          "quantity": 1,
+          "id": 2,
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -455,6 +455,7 @@ function Pagination({ totalItems, handlePagination, page, setPage }) {
                                 Array.from({ length: total_pages }).map(
                                     (el, index) => (
                                         <div
+                                            key={index}
                                             aria-current="page"
                                             onClick={() => {
                                                 setPage(index + 1)

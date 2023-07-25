@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 const initialState = {
     user: null,
     error: null,
@@ -14,13 +13,12 @@ export const createUser = createAsyncThunk(
     async (data) => {
         try {
 
-            const res = await fetch(`http://localhost:8080/users?email=${data.email}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users?email=${data.email}`)
             const user = await res.json();
             console.log(user)
             if (user.length !== 0) {
                 return ({ user: null, message: "User with this email already exist.Please,use another email." })
             }
-
             const response = await fetch('http://localhost:8080/users', {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -29,6 +27,23 @@ export const createUser = createAsyncThunk(
                 },
             })
             const d = await response.json()
+
+            console.log(d);
+            //creating user's cart 
+            const cart = {
+                id: d.id,
+                items: [],
+            }
+            const createCart = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/`, {
+                method: "POST",
+                body: JSON.stringify(cart),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+
+            const c = await createCart.json();
+            console.log(c)
             return ({ user: d, message: "User registered successfully" })
         } catch (err) {
             console.log(err)
@@ -41,9 +56,8 @@ export const createUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async (data) => {
-        const res = await fetch(`http://localhost:8080/users?email=${data.email}`);
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users?email=${data.email}`);
         const users = await res.json();
-
         if (users.length !== 0) {
             if (users[0].password !== data.password) {
                 return ({ user: null, message: 'Invalid credentials' })
@@ -69,6 +83,7 @@ const authSlice = createSlice({
                 state.status = 'loading'
             })
             .addCase(createUser.fulfilled, (state, action) => {
+                console.log("payload:- " + action.payload)
                 state.user = action.payload.user;
                 state.error = action.payload.message;
                 state.status = 'ideal'
