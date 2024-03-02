@@ -1,107 +1,94 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { STATUS } from "../../app/constants";
+import { createUserAPi, loginUserApi, updateUserApi } from "./authApi";
 
 const initialState = {
-    user: null,
-    error: null,
-    status: 'ideal',
-}
-
+  user: null,
+  error: null,
+  status: STATUS.IDEAL,
+};
 
 //Api to create new user for signup page
-export const createUser = createAsyncThunk(
-    'auth/createUser',
-    async (data) => {
-        try {
-
-            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users?email=${data.email}`)
-            const user = await res.json();
-            console.log(user)
-            if (user.length !== 0) {
-                return ({ user: null, message: "User with this email already exist.Please,use another email." })
-            }
-            const response = await fetch('http://localhost:8080/users', {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            const d = await response.json()
-
-            console.log(d);
-            //creating user's cart 
-            const cart = {
-                id: d.id,
-                items: [],
-            }
-            const createCart = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/`, {
-                method: "POST",
-                body: JSON.stringify(cart),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-
-            const c = await createCart.json();
-            console.log(c)
-            return ({ user: d, message: "User registered successfully" })
-        } catch (err) {
-            console.log(err)
-        }
-    }
-)
-
+export const createUser = createAsyncThunk("auth/createUser", async (data) => {
+  const response = await createUserAPi(data);
+  return response;
+});
 
 //Api to verify loging user for login page
-export const loginUser = createAsyncThunk(
-    'auth/loginUser',
-    async (data) => {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users?email=${data.email}`);
-        const users = await res.json();
-        if (users.length !== 0) {
-            if (users[0].password !== data.password) {
-                return ({ user: null, message: 'Invalid credentials' })
-            }
-            return ({ user: users[0], message: 'Loged In' })
-        } else {
-            return ({ user: null, message: 'No account with that email address.' })
-        }
+export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
+  console.log(data);
+  const response = await loginUserApi(data);
+  console.log(response);
+  return response;
+});
 
-    }
-)
-
-
+//to update the user info
+export const updateUser = createAsyncThunk("auth/updateUser", async (data) => {
+  const response = await updateUserApi(data);
+  return response;
+});
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
+  name: "auth",
+  initialState,
+  reducers: {
+    resetUser: (state) => {
+      state.user = null;
+      state.error = null;
+      state.status = STATUS.IDEAL;
+    },
+  },
 
-        builder
-            .addCase(createUser.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(createUser.fulfilled, (state, action) => {
-                console.log("payload:- " + action.payload)
-                state.user = action.payload.user;
-                state.error = action.payload.message;
-                state.status = 'ideal'
-            })
-            .addCase(loginUser.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(loginUser.fulfilled, (state, action) => {
-                state.user = action.payload.user;
-                state.error = action.payload.message;
-                state.status = 'ideal'
-            })
-    }
-})
+  extraReducers: (builder) => {
+    builder
+      .addCase(createUser.pending, (state) => {
+        state.status = STATUS.LOADING;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.error = action.payload.message;
+        state.status = STATUS.IDEAL;
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        // console.log(action)
+        state.error = action.error.message;
+        state.status = STATUS.ERROR;
+      })
 
+      .addCase(loginUser.pending, (state) => {
+        state.status = STATUS.LOADING;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        // console.log(action)
+        state.user = action.payload.data;
+        state.error = null;
+        state.status = STATUS.IDEAL;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.status = STATUS.ERROR;
+      })
 
+      .addCase(updateUser.pending, (state) => {
+        state.status = STATUS.LOADING;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        // console.log(action)
+        state.user = action.payload.data;
+        state.error = null;
+        state.status = STATUS.IDEAL;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.status = STATUS.ERROR;
+      });
+  },
+});
 
 export default authSlice.reducer;
 
+export const { resetUser } = authSlice.actions;
+
 export const selectUser = (state) => state.auth.user;
-export const selectError = (state) => state.auth.error;
+export const selectAuthStatus = (state) => state.auth.status;
+export const selectAuthError = (state) => state.auth.error;

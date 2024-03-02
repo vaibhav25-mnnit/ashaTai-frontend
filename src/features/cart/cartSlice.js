@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { status } from '../../app/constants'
+import { STATUS } from '../../app/constants'
 const initialState = {
     cartProducts: [],
-    status: status.ideal
+    status: STATUS.IDEAL
 }
 
 
@@ -23,7 +23,7 @@ export const addToCart = createAsyncThunk(
         const data = {
             items: items
         }
-        const push = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/` + product.user, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/` + product.user, {
             method: "PATCH",
             body: JSON.stringify(data),
             headers: { 'content-type': 'application/json' },
@@ -57,7 +57,7 @@ export const updateCart = createAsyncThunk(
             body: JSON.stringify(data),
             headers: { 'content-type': 'application/json' },
         })
-        const cart = await up.json();
+        await up.json();
 
         return product;
     }
@@ -76,7 +76,7 @@ export const deleteItem = createAsyncThunk(
         const data = {
             items: items
         }
-        const del = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/` + product.user, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/` + product.user, {
             method: "PATCH",
             body: JSON.stringify(data),
             headers: { 'content-type': 'application/json' },
@@ -85,47 +85,89 @@ export const deleteItem = createAsyncThunk(
     }
 )
 
+
+//to reset the cart
+export const resetCartAsync = createAsyncThunk(
+    'cart/resetCartAsync',
+    async (userId) => {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/` + userId, {
+            method: "PATCH",
+            body: JSON.stringify({ items: [] }),
+            headers: { 'content-type': 'application/json' },
+        })
+
+        const d = await res.json();
+    }
+)
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers: {},
+    reducers: {
+        resetCart: () => {
+            return initialState;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(addToCart.pending, (state) => {
-                state.status = status.loading
+                state.status = STATUS.LOADING
             })
             .addCase(addToCart.fulfilled, (state, action) => {
 
                 state.cartProducts.push(action.payload);
-                state.status = status.ideal
+                state.status = STATUS.IDEAL
             })
+            .addCase(addToCart.rejected, (state) => {
+                state.status = STATUS.ERROR
+            })
+
+
+
+
             .addCase(getCartItems.pending, (state) => {
-                state.status = status.loading
+                state.status = STATUS.LOADING
             })
             .addCase(getCartItems.fulfilled, (state, action) => {
                 state.cartProducts = action.payload;
-                state.status = status.ideal
+                state.status = STATUS.IDEAL
             })
+            .addCase(getCartItems.rejected, (state) => {
+                state.status = STATUS.ERROR
+            })
+
+
+
+
             .addCase(updateCart.pending, (state) => {
-                state.status = status.loading
+                state.status = STATUS.LOADING
             })
             .addCase(updateCart.fulfilled, (state, action) => {
-                state.status = status.ideal
+                state.status = STATUS.IDEAL
                 const index = state.cartProducts.findIndex(item => item.id === action.payload.id)
                 state.cartProducts[index] = action.payload;
             })
+
             .addCase(deleteItem.pending, (state) => {
-                state.status = status.loading
+                state.status = STATUS.LOADING
             })
             .addCase(deleteItem.fulfilled, (state, action) => {
-                state.status = status.ideal
+                state.status = STATUS.IDEAL
 
                 const index = state.cartProducts.findIndex(item => item.id === action.payload)
                 state.cartProducts.splice(index, 1);
             })
+
+            .addCase(resetCartAsync.pending, (state) => {
+                state.status = STATUS.LOADING
+            })
+            .addCase(resetCartAsync.fulfilled, (state) => {
+                return initialState;
+            })
     }
 
 })
+export const { resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer
 

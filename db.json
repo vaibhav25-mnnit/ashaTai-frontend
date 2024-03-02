@@ -1845,15 +1845,169 @@
       "name": "Vaibhav Bagate",
       "email": "vb9822445937@gmail.com",
       "password": "Vaibhav123",
-      "imageUrl": "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
-      "id": 1
+      "id": 1,
+      "selectedAddress": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "addresses": [
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "bagatevaibhav555@gmail.com",
+          "streetAddress": "NA\nNA",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "vb9822445937@gmail.com",
+          "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+          "city": "lkjlkjlkj",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "vb9822445937@gmail.com",
+          "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        }
+      ]
     },
     {
       "name": "vb",
       "email": "bagatevaibhav555@gmail.com",
       "password": "Vaibhav123",
-      "imageUrl": "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1687517843~exp=1687518443~hmac=b69b7d49c6a50eb27b8c1d30ae235136abf29af5734f5c34702e36addbbe0bdf",
-      "id": 2
+      "id": 2,
+      "selectedAddress": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "bagatevaibhav555@gmail.com",
+        "streetAddress": "slkadjflksa\nflaskdfj\nasdflk;jasdf",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "addresses": [
+        {
+          "fullName": "tony stark",
+          "phoneNumber": "123456789",
+          "email": "tony@stark.com",
+          "streetAddress": "Avengers tower\nnear shawrama shop\nwhere avengers battle was fought",
+          "city": "manhatten",
+          "state": "New YOrk",
+          "pinCode": "441012"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "bagatevaibhav555@gmail.com",
+          "streetAddress": "ls;dkjf\nsdfk;lksdjflkjsf\nas;lkdfs\nsadfkjas'fasflk\n",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Thor the avenger",
+          "phoneNumber": "9325763684",
+          "email": "vb9822445937@gmail.com",
+          "streetAddress": "Railway quarters,\nbehind guest house ,\nNew Latur Railway station",
+          "city": "Asgrad",
+          "state": "New Realm",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "bagatevaibhav555@gmail.com",
+          "streetAddress": "slkadjflksa\nflaskdfj\nasdflk;jasdf",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        }
+      ]
+    },
+    {
+      "name": "sumit Bagate",
+      "email": "sumitbagate@gmail.com",
+      "password": "Sumit123",
+      "addresses": [
+        {
+          "fullName": "sumit Bagate",
+          "phoneNumber": "8999932846",
+          "email": "sumitbagate@gmail.com",
+          "streetAddress": "Railway quarters,behind guest house ,\nnew latur railway station\nNew Latur Railway station",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Asha Bagate",
+          "phoneNumber": "9822445937",
+          "email": "ashabagate@gmail.com",
+          "streetAddress": "infornt of rajgrah buddha vihar,\nkamla nagar,\nhingoli\nHingoli,",
+          "city": "Hingoli",
+          "state": "Maharashtra",
+          "pinCode": "431513"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "bagatevaibhav555@gmail.com",
+          "streetAddress": ";laskf\nas;fjlals;kjflskjf\nsdfl;kkjasf\nas;dlfkjas\n",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "vb9822445937@gmail.com",
+          "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Tony Stark",
+          "phoneNumber": "8975363469",
+          "email": "bagatevaibhav555@gmail.com",
+          "streetAddress": "NA\nNA",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        },
+        {
+          "fullName": "Vaibhav Bagate",
+          "phoneNumber": "9325763684",
+          "email": "vb9822445937@gmail.com",
+          "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+          "city": "Latur",
+          "state": "Maharashtra",
+          "pinCode": "413512"
+        }
+      ],
+      "selectedAddress": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 3
     }
   ],
   "brands": [
@@ -2356,91 +2510,26 @@
       "items": [
         {
           "user": 1,
-          "quantity": 4,
-          "id": 4,
-          "title": "OPPOF19",
-          "description": "OPPO F19 is officially announced on April 2021.",
-          "price": 280,
-          "discountPercentage": 17.91,
-          "rating": 4.3,
-          "stock": 123,
-          "brand": "OPPO",
-          "category": "smartphones",
-          "thumbnail": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
-          "images": [
-            "https://i.dummyjson.com/data/products/4/1.jpg",
-            "https://i.dummyjson.com/data/products/4/2.jpg",
-            "https://i.dummyjson.com/data/products/4/3.jpg",
-            "https://i.dummyjson.com/data/products/4/4.jpg",
-            "https://i.dummyjson.com/data/products/4/thumbnail.jpg"
-          ]
-        },
-        {
-          "user": 1,
           "quantity": 1,
-          "id": 3,
-          "title": "Samsung Universe 9",
-          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
-          "price": 1249,
-          "discountPercentage": 15.46,
-          "rating": 4.09,
-          "stock": 36,
-          "brand": "Samsung",
-          "category": "smartphones",
-          "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-          "images": [
-            "https://i.dummyjson.com/data/products/3/1.jpg"
-          ]
-        },
-        {
-          "user": 1,
-          "quantity": 1,
-          "id": 9,
-          "title": "Infinix INBOOK",
-          "description": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
-          "price": 1099,
-          "discountPercentage": 11.83,
-          "rating": 4.54,
-          "stock": 96,
-          "brand": "Infinix",
+          "id": 6,
+          "title": "MacBook Pro",
+          "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
+          "price": 1749,
+          "discountPercentage": 11.02,
+          "rating": 4.57,
+          "stock": 83,
+          "brand": "Apple",
           "category": "laptops",
-          "thumbnail": "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+          "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
           "images": [
-            "https://i.dummyjson.com/data/products/9/1.jpg",
-            "https://i.dummyjson.com/data/products/9/2.png",
-            "https://i.dummyjson.com/data/products/9/3.png",
-            "https://i.dummyjson.com/data/products/9/4.jpg",
-            "https://i.dummyjson.com/data/products/9/thumbnail.jpg"
+            "https://i.dummyjson.com/data/products/6/1.png",
+            "https://i.dummyjson.com/data/products/6/2.jpg",
+            "https://i.dummyjson.com/data/products/6/3.png",
+            "https://i.dummyjson.com/data/products/6/4.jpg"
           ]
         },
         {
           "user": 1,
-          "quantity": 4,
-          "id": 24,
-          "title": "cereals muesli fruit nuts",
-          "description": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji",
-          "price": 46,
-          "discountPercentage": 16.8,
-          "rating": 4.94,
-          "stock": 113,
-          "brand": "fauji",
-          "category": "groceries",
-          "thumbnail": "https://i.dummyjson.com/data/products/24/thumbnail.jpg",
-          "images": [
-            "https://i.dummyjson.com/data/products/24/1.jpg",
-            "https://i.dummyjson.com/data/products/24/2.jpg",
-            "https://i.dummyjson.com/data/products/24/3.jpg",
-            "https://i.dummyjson.com/data/products/24/4.jpg",
-            "https://i.dummyjson.com/data/products/24/thumbnail.jpg"
-          ]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "items": [
-        {
-          "user": 2,
           "quantity": 1,
           "id": 2,
           "title": "iPhone X",
@@ -2460,6 +2549,442 @@
           ]
         }
       ]
+    },
+    {
+      "id": 2,
+      "items": []
+    },
+    {
+      "id": 3,
+      "items": []
+    }
+  ],
+  "orders": [
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 4,
+          "id": 4,
+          "title": "OPPOF19",
+          "description": "OPPO F19 is officially announced on April 2021.",
+          "price": 280,
+          "discountPercentage": 17.91,
+          "rating": 4.3,
+          "stock": 123,
+          "brand": "OPPO",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/4/1.jpg",
+            "https://i.dummyjson.com/data/products/4/2.jpg",
+            "https://i.dummyjson.com/data/products/4/3.jpg",
+            "https://i.dummyjson.com/data/products/4/4.jpg",
+            "https://i.dummyjson.com/data/products/4/thumbnail.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 1120,
+        "discount": 200
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 1
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 4,
+          "id": 4,
+          "title": "OPPOF19",
+          "description": "OPPO F19 is officially announced on April 2021.",
+          "price": 280,
+          "discountPercentage": 17.91,
+          "rating": 4.3,
+          "stock": 123,
+          "brand": "OPPO",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/4/1.jpg",
+            "https://i.dummyjson.com/data/products/4/2.jpg",
+            "https://i.dummyjson.com/data/products/4/3.jpg",
+            "https://i.dummyjson.com/data/products/4/4.jpg",
+            "https://i.dummyjson.com/data/products/4/thumbnail.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 1120,
+        "discount": 200
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 2
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 3,
+          "id": 2,
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 2697,
+        "discount": 483
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 3
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 4,
+          "id": 2,
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 3596,
+        "discount": 644
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 4
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 4,
+          "id": 2,
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 3596,
+        "discount": 644
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 5
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 1,
+          "id": 10,
+          "title": "HP Pavilion 15-DK1056WM",
+          "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+          "price": 1099,
+          "discountPercentage": 6.18,
+          "rating": 4.43,
+          "stock": 89,
+          "brand": "HP Pavilion",
+          "category": "laptops",
+          "thumbnail": "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+          "images": [
+            "https://i.dummyjson.com/data/products/10/1.jpg",
+            "https://i.dummyjson.com/data/products/10/2.jpg",
+            "https://i.dummyjson.com/data/products/10/3.jpg",
+            "https://i.dummyjson.com/data/products/10/thumbnail.jpeg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 1099,
+        "discount": 68
+      },
+      "address": {
+        "fullName": "Asha Bagate",
+        "phoneNumber": "9822445937",
+        "email": "ashabagate@gmail.com",
+        "streetAddress": "infornt of rajgrah buddha vihar,\nkamla nagar,\nhingoli\nHingoli,",
+        "city": "Hingoli",
+        "state": "Maharashtra",
+        "pinCode": "431513"
+      },
+      "id": 6
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 1,
+          "id": 10,
+          "title": "HP Pavilion 15-DK1056WM",
+          "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+          "price": 1099,
+          "discountPercentage": 6.18,
+          "rating": 4.43,
+          "stock": 89,
+          "brand": "HP Pavilion",
+          "category": "laptops",
+          "thumbnail": "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+          "images": [
+            "https://i.dummyjson.com/data/products/10/1.jpg",
+            "https://i.dummyjson.com/data/products/10/2.jpg",
+            "https://i.dummyjson.com/data/products/10/3.jpg",
+            "https://i.dummyjson.com/data/products/10/thumbnail.jpeg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 1099,
+        "discount": 68
+      },
+      "address": {
+        "fullName": "Asha Bagate",
+        "phoneNumber": "9822445937",
+        "email": "ashabagate@gmail.com",
+        "streetAddress": "infornt of rajgrah buddha vihar,\nkamla nagar,\nhingoli\nHingoli,",
+        "city": "Hingoli",
+        "state": "Maharashtra",
+        "pinCode": "431513"
+      },
+      "id": 7
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 1,
+          "id": 5,
+          "title": "Huawei P30",
+          "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
+          "price": 499,
+          "discountPercentage": 10.58,
+          "rating": 4.09,
+          "stock": 32,
+          "brand": "Huawei",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/5/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/5/1.jpg",
+            "https://i.dummyjson.com/data/products/5/2.jpg",
+            "https://i.dummyjson.com/data/products/5/3.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 499,
+        "discount": 53
+      },
+      "address": {
+        "fullName": "sumit Bagate",
+        "phoneNumber": "8999932846",
+        "email": "sumitbagate@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,\nnew latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 8
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 1,
+          "id": 5,
+          "title": "Huawei P30",
+          "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
+          "price": 499,
+          "discountPercentage": 10.58,
+          "rating": 4.09,
+          "stock": 32,
+          "brand": "Huawei",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/5/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/5/1.jpg",
+            "https://i.dummyjson.com/data/products/5/2.jpg",
+            "https://i.dummyjson.com/data/products/5/3.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 499,
+        "discount": 53
+      },
+      "address": {
+        "fullName": "sumit Bagate",
+        "phoneNumber": "8999932846",
+        "email": "sumitbagate@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,\nnew latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 9
+    },
+    {
+      "user": 3,
+      "items": [
+        {
+          "user": 3,
+          "quantity": 4,
+          "id": 92,
+          "title": "HOT SALE IN EUROPE electric racing motorcycle",
+          "description": "HOT SALE IN EUROPE electric racing motorcycle electric motorcycle for sale adult electric motorcycles",
+          "price": 920,
+          "discountPercentage": 14.4,
+          "rating": 4.19,
+          "stock": 22,
+          "brand": "BRAVE BULL",
+          "category": "motorcycle",
+          "thumbnail": "https://i.dummyjson.com/data/products/92/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/92/1.jpg",
+            "https://i.dummyjson.com/data/products/92/2.jpg",
+            "https://i.dummyjson.com/data/products/92/3.jpg",
+            "https://i.dummyjson.com/data/products/92/4.jpg"
+          ]
+        }
+      ],
+      "orderStatus": "pending",
+      "paymentDetails": {
+        "status": "pending",
+        "method": "cash",
+        "totalPrice": 3680,
+        "discount": 528
+      },
+      "address": {
+        "fullName": "Vaibhav Bagate",
+        "phoneNumber": "9325763684",
+        "email": "vb9822445937@gmail.com",
+        "streetAddress": "Railway quarters,behind guest house ,new latur railway station\nNew Latur Railway station",
+        "city": "Latur",
+        "state": "Maharashtra",
+        "pinCode": "413512"
+      },
+      "id": 10
+    }
+  ],
+  "id": [
+    {
+      "id": 1,
+      "sessionId": "session_pahVJk1auSvM7TalxnU5r54EbWWvoMvZqXC5l3HQJrZJG8THX3A9ggxUqUF4CxqItmIXgei_498R_CYp6MEZ9ljSxlzDm9gEVUBchoGUoNRC"
     }
   ]
 }

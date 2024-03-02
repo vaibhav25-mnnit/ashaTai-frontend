@@ -3,12 +3,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import productSlice from '../features/product-list/productSlice';
 import authSlice from '../features/auth/authSlice'
 import cartSlice from '../features/cart/cartSlice';
-
+import orderSlice from '../features/order/orderSlice';
+import paymentSlice from '../features/payment.js/paymentSlice';
 
 export const store = configureStore({
   reducer: {
     products: productSlice,
     auth: authSlice,
     cart: cartSlice,
+    order: orderSlice,
+    payment: paymentSlice
   },
 });

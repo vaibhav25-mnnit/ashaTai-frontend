@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProducts } from '../productSlice';
+import { STATUS } from '../../../app/constants';
+import Loader from '../../../components/Loader';
 
 export default function ProductList() {
     const dispatch = useDispatch();
@@ -13,26 +15,20 @@ export default function ProductList() {
     }, [dispatch]);
 
 
-    if (status === 'loading' || products === undefined) {
+    if (status === STATUS.LOADING || products === undefined) {
         return <div style={
             {
                 display: 'flex',
                 justifyContent: 'center',
             }
         }>
-            <div
-                className="flex h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status">
-                <span
-                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Loading...</span>
-            </div>
+            <Loader />
         </div>
     }
 
     return (
 
-        <div className="bg-white">
+        <div className="bg-white shadow">
             <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
 
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">

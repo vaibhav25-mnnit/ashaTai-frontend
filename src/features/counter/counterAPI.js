@@ -4,3 +4,14 @@ export function fetchCount(amount = 1) {
     setTimeout(() => resolve({ data: amount }), 500)
   );
 }
+
+
+
+export function giveSessionId(sessionId) {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve({ data: sessionId }), 5000)
+  );
+}
+
+
+

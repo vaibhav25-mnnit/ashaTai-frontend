@@ -1,10 +1,12 @@
 
 import { ITEMS_PER_PAGE } from "../../app/constants";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { STATUS } from "../../app/constants";
+
 const initialState = {
     products: [],
     totalProducts: 0,
-    status: 'ideal',
+    status: STATUS.IDEAL,
     categories: [],
     brands: [],
     selectedProduct: null
@@ -86,56 +88,77 @@ const productsSlice = createSlice({
     reducers: {
         sortProducts: (state, action) => {
             state.products = action.payload;
+        },
+        resetProducts: () => {
+            return initialState;
+        },
+        resetSelectedProducts: () => {
+            return { ...initialState, selectedProduct: null }
         }
-
     },
     extraReducers: (builder) => {
         builder
             .addCase(getProducts.pending, (state) => {
-                state.status = 'loading'
+                state.status = STATUS.LOADING;
             })
             .addCase(getProducts.fulfilled, (state, action) => {
-                state.status = 'ideal';
+                state.status = STATUS.IDEAL
                 state.products = action.payload.products;
                 state.totalProducts = action.payload.totalProducts;
             })
             .addCase(getProducts.rejected, (state) => {
-                state.status = 'error';
+                state.status = STATUS.ERROR;
             })
 
             .addCase(getFilteredProducts.pending, (state) => {
-                state.status = 'loading'
+                state.status = STATUS.LOADING
             })
             .addCase(getFilteredProducts.fulfilled, (state, action) => {
-                state.status = 'ideal';
+                state.status = STATUS.IDEAL;
                 state.products = action.payload.products;
             })
             .addCase(getFilteredProducts.rejected, (state) => {
-                state.status = 'error';
+                state.status = STATUS.ERROR;
+            })
+
+
+            .addCase(getBrands.pending, (state) => {
+                state.status = STATUS.LOADING
             })
             .addCase(getBrands.fulfilled, (state, action) => {
-                state.status = 'ideal';
+                state.status = STATUS.IDEAL;
                 state.brands = action.payload;
 
             })
             .addCase(getBrands.rejected, (state) => {
-                state.status = 'error';
+                state.status = STATUS.ERROR;
+            })
+
+
+
+            .addCase(getCategories.pending, (state) => {
+                state.status = STATUS.LOADING
             })
             .addCase(getCategories.fulfilled, (state, action) => {
-                state.status = 'ideal';
+                state.status = STATUS.IDEAL
                 state.categories = action.payload;
 
             })
             .addCase(getCategories.rejected, (state) => {
-                state.status = 'error';
+                state.status = STATUS.ERROR
+            })
+
+
+            .addCase(getSelectedProduct.pending, (state) => {
+                state.status = STATUS.LOADING
             })
             .addCase(getSelectedProduct.fulfilled, (state, action) => {
-                state.status = 'ideal';
+                state.status = STATUS.IDEAL
                 state.selectedProduct = action.payload;
 
             })
             .addCase(getSelectedProduct.rejected, (state) => {
-                state.status = 'error';
+                state.status = STATUS.ERROR
             })
 
     }
@@ -143,7 +166,7 @@ const productsSlice = createSlice({
 
 
 
-export const { sortProducts } = productsSlice.actions;
+export const { sortProducts, resetProducts, resetSelectedProducts } = productsSlice.actions;
 
 
 export default productsSlice.reducer;
