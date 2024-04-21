@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 // import './App.css'
+
+//checking if submodule works or not in frontend
+
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
