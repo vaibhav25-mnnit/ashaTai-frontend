@@ -16,9 +16,7 @@ export const createUser = createAsyncThunk("auth/createUser", async (data) => {
 
 //Api to verify loging user for login page
 export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
-  console.log(data);
-  const response = await loginUserApi(data);
-  console.log(response);
+  const response = await loginUserApi(data); 
   return response;
 });
 
@@ -45,12 +43,14 @@ const authSlice = createSlice({
         state.status = STATUS.LOADING;
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        console.log("fulfilled");
+        console.log(action);
         state.user = action.payload.user;
         state.error = action.payload.message;
         state.status = STATUS.IDEAL;
       })
       .addCase(createUser.rejected, (state, action) => {
-        // console.log(action)
+  
         state.error = action.error.message;
         state.status = STATUS.ERROR;
       })

@@ -21,7 +21,7 @@ function Hero() {
                         <p className="mt-6 text-lg dark:text-white leading-8 text-gray-600"> Experience and Discover the convenience and joy of having homemade, authentic  food at your fingertips. </p>
 
                         <div className="mt-6 flex items-center justify-center ">
-                            <Link to='/'>
+                            <Link to='/shop-all'>
                                 <span className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Buy Now</span>
                             </Link>
                         </div>

@@ -39,7 +39,6 @@ export default function Products() {
         },
     ]
 
-
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     const [page, setPage] = useState(1);

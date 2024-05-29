@@ -38,12 +38,9 @@ export default function ProductDetail() {
     }, [selectedProduct, cartProducts])
 
 
-
-
     // function to dynamically change the go to cart button
-    const searchInCart = (id) => {
-        id = +id;
-        let found = cartProducts.find(p => p.id === id)
+    const searchInCart = (id) => {  
+        let found = cartProducts.find(p => p.product.id === id)
         if (found) setIncart(1)
         else setIncart(0)
     }
@@ -51,7 +48,7 @@ export default function ProductDetail() {
     //add the product to cart
     const handleClick = async (product) => {
         // if (status === STATUS.LOADING) return;
-        await dispatch(addToCart({ user: logedInUser.id, quantity: 1, ...product }));
+        await dispatch(addToCart({ user: logedInUser._id, quantity: 1, product:product.id }));
         toast.success(`${product.title} added to cart`)
     }
 

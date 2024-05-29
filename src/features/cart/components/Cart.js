@@ -13,16 +13,17 @@ function Cart({ width = '2/3', flag }) {
     const user = useSelector(selectUser)
     let total = 0;
 
-    const changeQuantity = (e, product) => {
-        dispatch(updateCart({ ...product, quantity: +e.target.value }))
+    const changeQuantity = (e, product) => { 
+        dispatch(updateCart({id:product.id  ,quantity: +e.target.value }))
     }
 
-    const handleDelete = async (product) => {
-        await dispatch(deleteItem(product))
-        toast.success(`successfully removed ${product.title} from cart.`)
+    const handleDelete = async (data) => {
+        await dispatch(deleteItem(data.id))
+        // console.log(product);
+        toast.success(`successfully removed ${data.product.title} from cart.`)
     }
 
-
+  
     const handleReset = async () => {
         await dispatch(resetCartAsync(user.id))
         toast.success(`successfully cleared cart.`)
@@ -38,16 +39,16 @@ function Cart({ width = '2/3', flag }) {
                                     <div className="mt-8">
                                         <div className="flow-root">
                                             <ul className={`-my-6 divide-y divide-gray-200`}>
-                                                {Products.map((product) => (
-                                                    <li key={product.id} className={`flex py-6  ${status === STATUS.LOADING && 'blur-sm animate-pulse'} `}>
+                                                {Products.map((p) => (
+                                                    <li key={p.product.id} className={`flex py-6  ${status === STATUS.LOADING && 'blur-sm animate-pulse'} `}>
                                                         <span className='hidden'>
-                                                            {total += (Math.round(product.price - ((product.price) * (product.discountPercentage / 100))) * product.quantity
+                                                            {total += (Math.round(p.product.price - ((p.product.price) * (p.product.discountPercentage / 100))) * p.quantity
                                                             )}
                                                         </span>
                                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                             <img
-                                                                src={product.thumbnail}
-                                                                alt={product.title}
+                                                                src={p.product.thumbnail}
+                                                                alt={p.product.title}
                                                                 className="h-full w-full object-cover object-center"
                                                             />
                                                         </div>
@@ -56,38 +57,40 @@ function Cart({ width = '2/3', flag }) {
                                                             <div>
                                                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                                                     <h3>
-                                                                        <Link to={`/product-detail/${product.id}`}>{product.title}</Link>
+                                                                        <Link to={`/product-detail/${p.product.id}`}>{p.product.title}</Link>
                                                                     </h3>
                                                                     <div className='flex  flex-col'>
-                                                                        <p className=""> ${(Math.round(product.price - ((product.price) * (product.discountPercentage / 100))) * product.quantity
+                                                                        <p className=""> ${(Math.round(p.product.price - ((p.product.price) * (p.product.discountPercentage / 100))) * p.quantity
                                                                         )}</p>
-                                                                        <p className="tracking-tight text-gray-900 line-through">${product.quantity * product.price}</p>
+                                                                        <p className="tracking-tight text-gray-900 line-through">${p.quantity * p.product.price}</p>
                                                                     </div>
-
-
                                                                 </div>
                                                             </div>
+
                                                             <div className="flex flex-1 items-end justify-between text-sm">
+                                                               
                                                                 <div className="text-gray-500">
                                                                     <label htmlFor="quantity" className="inline mr-3 text-sm font-medium leading-6 text-gray-900">
                                                                         Qty
                                                                     </label>
-                                                                    <select onChange={(e) => changeQuantity(e, product)} value={product.quantity}>
+                                                                    <select onChange={(e) => changeQuantity(e, p)} value={p.quantity}>
                                                                         <option value={1}>1</option>
                                                                         <option value={2}>2</option>
                                                                         <option value={3}>3</option>
                                                                         <option value={4}>4</option>
+                                                                        <option value={5}>5</option>
                                                                     </select>
                                                                 </div>
 
                                                                 <div className="flex">
-                                                                    <button onClick={() => handleDelete(product)}
+                                                                    <button onClick={() => handleDelete(p)}
                                                                         type="button"
                                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                     >
                                                                         Remove
                                                                     </button>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </li>

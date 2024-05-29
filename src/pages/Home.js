@@ -24,9 +24,6 @@ export default function Home() {
             Contact Section
         </div>
 
-
-
-
     </>
     )
 }

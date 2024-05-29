@@ -17,10 +17,9 @@ const initialState = {
 export const getProducts = createAsyncThunk(
     'products/getProducts',
     async (page) => {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products?_page=${page}&_limit=${ITEMS_PER_PAGE}`);
-        const d = await res.json();
-        const totalProducts = await res.headers.get('X-total-Count')
-
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/product/all?_page=${page}&_limit=${ITEMS_PER_PAGE}`); 
+        const d = await res.json(); 
+        const totalProducts =  res.headers.get('X-total-Count');
         return { products: d, totalProducts: totalProducts };
     }
 )
@@ -76,7 +75,7 @@ export const getCategories = createAsyncThunk(
 export const getSelectedProduct = createAsyncThunk(
     'products/getSelectedProduct',
     async (id) => {
-        const p = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products/${id}`);
+        const p = await fetch(`${process.env.REACT_APP_BACKEND_URL}/product/getProduct/${id}`);
         const d = p.json();
         return d;
     }

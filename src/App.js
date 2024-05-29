@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/shop-all",
-    element: <Protected component={<Products />} />,
+    element:   <Products />,
   },
   {
     path: '/login',
@@ -96,10 +96,11 @@ function App() {
   const dispatch = useDispatch();
   const logedInUser = useSelector(selectUser);
 
+  
 
   useEffect(() => {
     if (logedInUser) {
-      dispatch(getCartItems(logedInUser.id))
+      dispatch(getCartItems(logedInUser._id))
     }
   }, [dispatch, logedInUser])
 

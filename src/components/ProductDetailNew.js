@@ -24,12 +24,17 @@ function ProductDetailNew() {
     const [changeLogin, setChangeLogin] = useState(false)
 
     const changeQuantity = (e, product) => {
-        dispatch(updateCart({ ...product, quantity: +e.target.value }))
+
+       const newObj = 
+        { ...product, quantity: +e.target.value };
+        console.log(newObj);
+
+        // dispatch(updateCart({ ...product, quantity: +e.target.value }))
     }
 
     const handleDelete = async (product) => {
-        await dispatch(deleteItem(product))
-        toast.success(`successfully removed ${product.title} from cart.`)
+        // await dispatch(deleteItem(product))
+        // toast.success(`successfully removed ${product.title} from cart.`)
     }
     return (
         <>
