@@ -29,8 +29,7 @@ function Login() {
   const status = useSelector(selectAuthStatus);
 
   useEffect(() => {
-    if (user === null && status === STATUS.ERROR) {
-      console.log("calling dispatch from signup");
+    if (user === null && status === STATUS.ERROR) { 
       dispatch(resetUser());
     }
   });
@@ -107,7 +106,7 @@ function Login() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    to="#"
+                    to="/send-reset-mail"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?

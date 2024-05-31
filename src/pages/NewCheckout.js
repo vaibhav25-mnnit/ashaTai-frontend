@@ -63,9 +63,9 @@ export default function NewCheckout() {
     //update price total
     const updatePrice = () => {
         let totalPrice = 0, discount = 0;
-        Products.forEach((product) => {
-            totalPrice += (product.price * product.quantity)
-            discount += (Math.round(((product.price) * (product.discountPercentage / 100))) * product.quantity)
+        Products.forEach((p) => {
+            totalPrice += (p.product.price * p.quantity)
+            discount += (Math.round(((p.product.price) * (p.product.discountPercentage / 100))) * p.quantity)
         })
 
         setDiscount(discount)
@@ -275,6 +275,7 @@ export default function NewCheckout() {
                 <div className='grid grid-cols-6 gap-4 px-20' style={{
                     'padding': '0 8rem'
                 }}>
+                    {/* Left side section */}
                     <div className='col-span-6 lg:col-span-4'>
 
                         {/* Login Details */}
@@ -353,14 +354,14 @@ export default function NewCheckout() {
                                 <div className='inner-address'>
 
                                     <div className='d-address'>
-                                        <h1 className='font-bold'>{user.selectedAddress.fullName}</h1>
+                                        <h1 className='font-bold'>{user.selectedAddress?.fullName}</h1>
                                         {
-                                            user.selectedAddress.streetAddress
+                                            user.selectedAddress?.streetAddress
                                         }
                                         <p >
-                                            {user.selectedAddress.city}, {user.selectedAddress.state} - {user.selectedAddress.pinCode}
+                                            {user.selectedAddress?.city}, {user.selectedAddress?.state} - {user.selectedAddress?.pinCode}
                                         </p>
-                                        <h5> Phone: {user.selectedAddress.phoneNumber}</h5>
+                                        <h5> Phone: {user.selectedAddress?.phoneNumber}</h5>
                                     </div>
 
                                 </div>
@@ -381,18 +382,12 @@ export default function NewCheckout() {
                                     </div>
                                     }
                                 </div>
-
                                 <div>
                                     <button
                                         type="button"
-                                        onClick={() => {
-                                            if (showSummary === false) {
-                                                setShowSummary(true)
-                                            } else {
-                                                setShowSummary(false)
-                                            }
+                                        onClick={() => { 
+                                                setShowSummary(!showSummary)
                                         }} className="text-indigo-700 hover:text-white border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-indigo-500 dark:text-indigo-500 dark:hover:text-white dark:hover:bg-indigo-500 dark:focus:ring-indigo-800">
-
                                         {
                                             showSummary ?
                                                 'Hide'
@@ -412,13 +407,13 @@ export default function NewCheckout() {
                                                 <div className="flow-root">
                                                     <ul role="list" className={`-my-6 divide-y divide-gray-200 ${cartStatus === STATUS.LOADING && 'blur-sm animate-pulse'}`}>
                                                         {
-                                                            Products.map((product) => (
+                                                            Products.map((p) => (
 
-                                                                <li key={product.id} className="flex py-6">
+                                                                <li key={p.product.id} className="flex py-6">
                                                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                         <img
-                                                                            src={product.thumbnail}
-                                                                            alt={product.title}
+                                                                            src={p.product.thumbnail}
+                                                                            alt={p.product.title}
                                                                             className="h-full w-full object-cover object-center"
                                                                         />
                                                                     </div>
@@ -427,19 +422,19 @@ export default function NewCheckout() {
                                                                         <div>
                                                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                                                                 <h3>
-                                                                                    <Link to={`/product-detail/${product.id}`}>{product.title}</Link>
+                                                                                    <Link to={`/product-detail/${p.product.id}`}>{p.product.title}</Link>
                                                                                 </h3>
                                                                                 <div className='flex  flex-col'>
                                                                                     <p className="ml-4">
                                                                                         ${
-                                                                                            (Math.round(product.price - ((product.price) * (product.discountPercentage / 100))) * product.quantity)
+                                                                                            (Math.round(p.product.price - ((p.product.price) * (p.product.discountPercentage / 100))) * p.quantity)
                                                                                         }
                                                                                     </p>
-                                                                                    <p className="ml-4 tracking-tight text-gray-900 line-through">${product.quantity * product.price}</p>
+                                                                                    <p className="ml-4 tracking-tight text-gray-900 line-through">${p.quantity * p.product.price}</p>
                                                                                 </div>
                                                                             </div>
-
                                                                         </div>
+
                                                                         <div className="flex flex-1 items-end justify-between text-sm">
                                                                             <div>
                                                                                 <label htmlFor="quantity" className="inline mr-3 text-sm font-medium leading-6 text-gray-900">
@@ -450,7 +445,7 @@ export default function NewCheckout() {
                                                                                     borderRadius: '10px'
                                                                                 }}
                                                                                     className='inline  text-md font-medium text-gray-900'
-                                                                                    onChange={(e) => changeQuantity(e, product)} value={product.quantity}>
+                                                                                    onChange={(e) => changeQuantity(e, p)} value={p.quantity}>
                                                                                     <option value={1}>1</option>
                                                                                     <option value={2}>2</option>
                                                                                     <option value={3}>3</option>
@@ -459,7 +454,7 @@ export default function NewCheckout() {
                                                                             </div>
                                                                             <div className="flex">
                                                                                 <button
-                                                                                    onClick={() => handleDelete(product)}
+                                                                                    onClick={() => handleDelete(p)}
                                                                                     type="button"
                                                                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                                 >
@@ -467,6 +462,7 @@ export default function NewCheckout() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
+
                                                                     </div>
                                                                 </li>
                                                             ))
@@ -480,8 +476,7 @@ export default function NewCheckout() {
                             }
                         </div>
 
-                        <br />
-
+                        <br /> 
                         {/* Payment Method */}
                         <div className='left-child bg-white shadow'>
                             <h1>Select Payment Mode</h1>
@@ -567,14 +562,14 @@ export default function NewCheckout() {
 
 
                         </div>
+
                     </div>
 
-                    {/* Right Side section */}
-
-                    {/* <div className='right'> */}
+                    {/* Right Side section */} 
                     <div className='col-span-5  lg:col-span-2 ' style={{
                         width: '129%'
                     }}>
+
                         <div className={`left-child bg-white shadow`} >
                             <h1 style={{
                                 color: '#5c5959',
@@ -628,6 +623,7 @@ export default function NewCheckout() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -646,15 +642,12 @@ export default function NewCheckout() {
                     <div id='render' className='overflow-x-hidden' > </div>
 
                 </div>
-
-
+            
             </Modal >
         </>
 
     )
 }
-
-
 
 
 function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
@@ -668,15 +661,15 @@ function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
                         <div className="flow-root">
 
                             {
-                                addresses.map((address, index) => (
+                                addresses?.map((address, index) => (
                                     <>
                                         <div key={index} class="flex flex-col mb-3 items-center  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
                                             <div class="flex flex-col justify-between p-4 leading-normal">
-                                                <h5 class="mb-2 text-xl font-bold text-gray-900">{address.fullName}</h5>
-                                                <p class=" font-normal ">{address.streetAddress}</p>
-                                                <p class=" font-normal ">{address.city}</p>
-                                                <p class=" font-normal ">{address.state} - {address.pinCode}</p>
-                                                <p class=" font-normal mt-2">Phone: {address.phoneNumber}</p>
+                                                <h5 class="mb-2 text-xl font-bold text-gray-900">{address?.fullName}</h5>
+                                                <p class=" font-normal ">{address?.streetAddress}</p>
+                                                <p class=" font-normal ">{address?.city}</p>
+                                                <p class=" font-normal ">{address?.state} - {address?.pinCode}</p>
+                                                <p class=" font-normal mt-2">Phone: {address?.phoneNumber}</p>
                                             </div>
                                             <button class="text-indigo-700 hover:text-white border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 " onClick={
                                                 async () => {

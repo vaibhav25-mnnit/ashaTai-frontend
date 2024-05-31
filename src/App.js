@@ -29,7 +29,9 @@ import Success from './components/Success';
 import OrdersPage from './pages/OrdersPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import CashFreePayment from './components/CashFreePayment';
-import Products from './features/product-list/components/Products';
+import Products from './features/product-list/components/Products'; 
+import SendResetMail from './features/resetPassword.js/components/SendResetMail';
+import ResetPassword from './features/resetPassword.js/components/ResetPassword';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css'
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />
+  },
+  {
+    path: '/send-reset-mail',
+    element: <SendResetMail />
+  },
+  {
+    path: '/reset-password/:token',
+    element: <ResetPassword />
   },
   {
     path: '/signup',

@@ -166,8 +166,8 @@ function Signup() {
                 </span>
               )}
             </div>
+            
             {/* Street-address */}
-
             <div className="col-span-full">
               <label
                 htmlFor="streetAddress"

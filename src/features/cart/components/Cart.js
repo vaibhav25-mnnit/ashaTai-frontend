@@ -25,7 +25,7 @@ function Cart({ width = '2/3', flag }) {
 
   
     const handleReset = async () => {
-        await dispatch(resetCartAsync(user.id))
+        await dispatch(resetCartAsync(user._id))
         toast.success(`successfully cleared cart.`)
     }
     return (

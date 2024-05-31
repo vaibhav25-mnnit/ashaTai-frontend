@@ -20,7 +20,7 @@ function Success() {
 
         dispatch(resetCurrentOrder())
         if (status === 'success') {
-            dispatch(resetCartAsync(user.id));
+            dispatch(resetCartAsync(user._id));
         }
     }, [dispatch])
 
