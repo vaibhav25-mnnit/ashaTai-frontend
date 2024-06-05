@@ -43,19 +43,20 @@ export default function NewCheckout() {
     const [cashButton, setCashButton] = useState(true)
     const [id, setId] = useState(null)
     // change quantity of product
-    const changeQuantity = (e, product) => {
-        dispatch(updateCart({ ...product, quantity: +e.target.value }))
+    const changeQuantity = (e, product) => { 
+        dispatch(updateCart({id:product.id  ,quantity: +e.target.value }))
     }
 
     //delete product from cart
-    const handleDelete = async (product) => {
-        await dispatch(deleteItem(product))
-        toast.success(`successfully removed ${product.title} from cart.`)
+    const handleDelete = async (data) => {
+        await dispatch(deleteItem(data.id)) 
+        toast.success(`successfully removed ${data.product.title} from cart.`)
     }
 
     //select the address for delivery
-    const handleSelectAddress = async (data) => {
-        await dispatch(updateUser({ ...user, selectedAddress: data }))
+    const handleSelectAddress = async (data) => { 
+        const update = {  selectedAddress:data._id }
+        await dispatch(updateUser({ user:data.user, address : update }))
         toast.success('Successfully Updated delivery address.')
         Cancel();
     }
@@ -82,45 +83,42 @@ export default function NewCheckout() {
         setOpenModal(false)
     }
 
-
-
     //to handle the order
     const handleOrder = async () => {
 
         const order = {
-            user: "64e4edf374e34b3d2365e054",
+            user: user._id,
             items: Products,
             priceDetails: {
                 totalPrice: totalPrice,
                 discount: discount,
                 toPay: totalPrice - discount
             },
+            address: user.selectedAddress    
+        } 
 
-            address: user.selectedAddress
-        }
+        // if (paymentMethod === 'cash') {
+        //     const res = await fetch('http://localhost:5000/pay/create-order?mode=cash', {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             ...order,
+        //             paymentDetails: {
+        //                 method: 'cash',
+        //             }
+        //         }),
+        //         headers: { 'content-type': 'application/json' },
+        //     })
+        //     const d = await res.json();
+        //     const o = await d.data;
 
-        if (paymentMethod === 'cash') {
-            const res = await fetch('http://localhost:5000/pay/create-order?mode=cash', {
-                method: "POST",
-                body: JSON.stringify({
-                    ...order,
-                    paymentDetails: {
-                        method: 'cash',
-                    }
-                }),
-                headers: { 'content-type': 'application/json' },
-            })
-            const d = await res.json();
-            const o = await d.data;
+        //     navigate(`/order-success/${o.id}/success`, { replace: true })
 
-            navigate(`/order-success/${o.id}/success`, { replace: true })
-
-        } else if (paymentMethod === 'online') {
-            await setOpenPayment(true)
-            await startPayment(order);
-        } else {
-            alert("Please Select Payment method")
-        }
+        // } else if (paymentMethod === 'online') {
+        //     await setOpenPayment(true)
+        //     await startPayment(order);
+        // } else {
+        //     alert("Please Select Payment method")
+        // }
         /*
         if (paymentMethod === 'cash') {
             // alert('Ordering through cod.')
@@ -296,6 +294,7 @@ export default function NewCheckout() {
                         {/* Address Selection */}
                         <div className='left-child bg-white shadow' >
 
+                            {/* Upper button to select or add address */}
                             <div className='flex justify-between items-center'>
                                 <div>
                                     <h1>Delivery Address ✔</h1>
@@ -350,10 +349,12 @@ export default function NewCheckout() {
                             </Modal>
 
                             <hr />
+
                             <div className='d-address '>
                                 <div className='inner-address'>
-
-                                    <div className='d-address'>
+                                 {
+                                 user.selectedAddress?
+                                <div className='d-address'>
                                         <h1 className='font-bold'>{user.selectedAddress?.fullName}</h1>
                                         {
                                             user.selectedAddress?.streetAddress
@@ -362,14 +363,17 @@ export default function NewCheckout() {
                                             {user.selectedAddress?.city}, {user.selectedAddress?.state} - {user.selectedAddress?.pinCode}
                                         </p>
                                         <h5> Phone: {user.selectedAddress?.phoneNumber}</h5>
-                                    </div>
-
+                                </div>
+                                :
+                                <h1>Please select or add new address for delivery.</h1>
+                                }  
+                                  
                                 </div>
                             </div>
+
                         </div>
 
                         <br></br>
-
 
                         {/* Order Summary */}
                         <div className='left-child bg-white shadow'>
@@ -398,7 +402,8 @@ export default function NewCheckout() {
                                 </div>
                             </div>
 
-                            {showSummary &&
+                            {
+                            showSummary &&
                                 <div>
                                     <hr />
                                     <div className="flex h-full flex-col ">
@@ -450,6 +455,7 @@ export default function NewCheckout() {
                                                                                     <option value={2}>2</option>
                                                                                     <option value={3}>3</option>
                                                                                     <option value={4}>4</option>
+                                                                                    <option value={5}>5</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div className="flex">
@@ -651,8 +657,7 @@ export default function NewCheckout() {
 
 
 function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
-
-
+    
     return <>
         <div>
             <div className="flex h-full flex-col ">
@@ -661,7 +666,7 @@ function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
                         <div className="flow-root">
 
                             {
-                                addresses?.map((address, index) => (
+                               addresses.length>0 ?addresses.map((address, index) => (
                                     <>
                                         <div key={index} class="flex flex-col mb-3 items-center  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
                                             <div class="flex flex-col justify-between p-4 leading-normal">
@@ -679,7 +684,7 @@ function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
                                             }> Deliver Here</button>
                                         </div>
                                     </>
-                                ))
+                                )):<h1>You dont have any address.Please add new address.</h1>
                             }
                         </div>
                     </div>

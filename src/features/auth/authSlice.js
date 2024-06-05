@@ -42,9 +42,7 @@ const authSlice = createSlice({
       .addCase(createUser.pending, (state) => {
         state.status = STATUS.LOADING;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
-        console.log("fulfilled");
-        console.log(action);
+      .addCase(createUser.fulfilled, (state, action) => { 
         state.user = action.payload.user;
         state.error = action.payload.message;
         state.status = STATUS.IDEAL;
@@ -72,8 +70,7 @@ const authSlice = createSlice({
       .addCase(updateUser.pending, (state) => {
         state.status = STATUS.LOADING;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
-        // console.log(action)
+      .addCase(updateUser.fulfilled, (state, action) => { 
         state.user = action.payload.data;
         state.error = null;
         state.status = STATUS.IDEAL;

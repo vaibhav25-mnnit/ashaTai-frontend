@@ -49,18 +49,35 @@ export async function loginUserApi(data) {
   });
 }
 
-export async function updateUserApi(data) {
+export async function updateUserApi({user,add,edit,address}) {
+  
+  let url = `${process.env.REACT_APP_BACKEND_URL}/user/update/${user}?`
+  if(add){
+    url+=`add=true`
+  }
+
+  if(edit){
+   url+=`edit=${edit}` 
+  }
+
+  console.log(url);
   const res = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}/users/${data.id}`,
+    url,
     {
       method: "PATCH",
-      body: JSON.stringify(data),
+      body: JSON.stringify(address),
       headers: { "content-type": "application/json" },
     }
   );
-  const user = await res.json();
-  // console.log(user)
-  return new Promise((resolve) => {
-    resolve({ data: user });
-  });
+  const response = await res.json(); 
+   
+  return new Promise((resolve,reject) => {
+    if(response.success===true)
+      return  resolve({ data: response.data });
+    
+    return reject( reject({
+      user: null,
+      message: response.message
+    }))
+});
 }

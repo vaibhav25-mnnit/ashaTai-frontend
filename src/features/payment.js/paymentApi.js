@@ -1,3 +1,6 @@
+export function createOrder(){
+    
+}
 
 export function giveSessionId() {
     const sessionId = 'session_iPQxNOzuuW9Nyh7mNMkpra6g38PlqNXpVUTs3AG-G2SpRiJDAOnzDzWN-FFxIoHNuzZcjQXlkZe296yJ7BUWtjooXiaSte8uFCggD2Qcu55K'

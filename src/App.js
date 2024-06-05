@@ -14,8 +14,7 @@ import {
 } from "react-router-dom";
 
 
-import CartPage from './pages/CartPage';
-import Checkout from './pages/Checkout';
+import CartPage from './pages/CartPage'; 
 import NewCheckout from './pages/NewCheckout';
 import ProductDetailPage from './features/product-list/components/ProductDetail'
 import NotFound from './pages/NotFound'
@@ -39,12 +38,11 @@ import 'aos/dist/aos.css'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />
-    // element: <Protected component={<Home />} />,
+    element: <Home /> 
   },
   {
     path: "/shop-all",
-    element:   <Products />,
+    element: <Navbar children={<Products />} />  ,
   },
   {
     path: '/login',
@@ -68,11 +66,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/checkout',
-    element: <Protected component={<Navbar title={"Checkout"} children={<NewCheckout />} />} />
+    element: <Protected component={<Navbar dontShowNav={true} title="Checkout"  children={<NewCheckout />} />} />
+    // element: <Protected component={<NewCheckout />}/>
   },
   {
     path: '/product-detail/:id',
-    element: <Protected component={<ProductDetailPage />} />
+    // element: <Protected component={<ProductDetailPage />} />
+    element:  <ProductDetailPage />  
   },
   {
     path: '/orders',

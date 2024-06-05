@@ -16,10 +16,10 @@ function AddressInputFrom({ Cancel }) {
     const currentUser = useSelector(selectUser)
     const authStatus = useSelector(selectAuthStatus)
     const onSubmit = async (data) => {
-        await dispatch(updateUser({ ...currentUser, selectedAddress: data, addresses: [...currentUser.addresses, data] }))
-        reset()
+        console.log(data);
+        await dispatch(updateUser({user:currentUser._id,add:"true",address:data}));
         toast.success('Successfully Updated delivery address.')
-        Cancel();
+        Cancel(); 
     }
 
     return (

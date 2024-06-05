@@ -1,12 +1,8 @@
 export const sentResetEmail = async ({email})=>{
-    const c = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/sendResetMail?mail=`+email)
-    console.log(c);
-    const d = await c.json();
-    console.log(d);
+    const c = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/sendResetMail?mail=`+email) 
+    const d = await c.json(); 
     return d;
 }
-
-
 
 export const changePassword = async (data)=>{ 
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/resetPassword`, {

@@ -33,10 +33,7 @@ const orderStatus = [
         status: 'delivered',
         date: 'AUG 20,2023',
         comment: 'Order delivered successfully'
-
     }
-
-
 ]
 
 function OrderDetails({ order }) {

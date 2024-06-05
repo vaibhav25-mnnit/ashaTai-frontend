@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,27 +23,18 @@ function Signup() {
   const user = useSelector(selectUser);
   const message = useSelector(selectAuthError);
   const status = useSelector(selectAuthStatus);
-
+  const navigate = useNavigate();
   //handle form submission
   const onSubmit = async (data) => {
-    const tempAddress = {
-      fullName: data.name,
-      phoneNumber: data.phoneNumber,
-      email: data.email,
-      streetAddress: data.streetAddress,
-      city: data.city,
-      state: data.state,
-      pinCode: data.pinCode,
-    };
+    
     await dispatch(
       createUser({
         name: data.name,
         email: data.email,
-        password: data.password,
-        addresses: [tempAddress],
-        selectedAddress: tempAddress,
+        password: data.password
       })
     );
+
   };
 
   useEffect(() => {
@@ -56,14 +47,13 @@ function Signup() {
       toast.error(message);
     }
     if (status === STATUS.IDEAL) {
-      if (user) toast.success(`Welcome ${user.name}`);
+      if (user) toast.success(`Welcome ${user.name}.`);
     }
   }, [status]);
 
   return (
-    <>
-      {user && <Navigate to="/" replace="true" />}
-
+    <> 
+   {user && <Navigate to="/" replace="true" />}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Link to="/">
@@ -133,145 +123,7 @@ function Signup() {
               )}
             </div>
 
-            {/* Phone Number */}
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="phoneNumber"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Phone Number
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("phoneNumber", {
-                    required: "Phone Number is required",
-                    maxLength: {
-                      value: 10,
-                      message: "Please Enter Valid Phone Number.",
-                    },
-                    pattern: {
-                      value: /(\+)?(91)?( )?[789]\d{9}/,
-                      message: "Please Enter Valid Phone Number.",
-                    },
-                  })}
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="text"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors.phoneNumber && (
-                <span className="text-red-500">
-                  {errors.phoneNumber.message}
-                </span>
-              )}
-            </div>
-            
-            {/* Street-address */}
-            <div className="col-span-full">
-              <label
-                htmlFor="streetAddress"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Complete Address
-              </label>
-              <div className="mt-2">
-                <textarea
-                  {...register("streetAddress", {
-                    required: "Street Address is required.",
-                  })}
-                  rows="4"
-                  cols="40"
-                  name="streetAddress"
-                  id="streetAddress"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                ></textarea>
-              </div>
-
-              {errors.streetAddress && (
-                <span className="text-red-500">
-                  {errors.streetAddress.message}
-                </span>
-              )}
-            </div>
-
-            {/* City */}
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("city", {
-                    required: "City is required",
-                  })}
-                  type="text"
-                  name="city"
-                  id="city"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors.city && (
-                <span className="text-red-500">{errors.city.message}</span>
-              )}
-            </div>
-
-            {/* State */}
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="state"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                State
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("state", {
-                    required: "State is required.",
-                  })}
-                  type="text"
-                  name="state"
-                  id="state"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors.state && (
-                <span className="text-red-500">{errors.state.message}</span>
-              )}
-            </div>
-
-            {/* Pin Code */}
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="pinCode"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Postal code
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("pinCode", {
-                    required: "Postal Code is required",
-                    pattern: {
-                      value: /([1-9][0-9]{5}|[1-9][0-9]{2}[\s]\d{3})/gi,
-                      message: "Enter Valid Postal Code",
-                    },
-                  })}
-                  type="text"
-                  name="pinCode"
-                  id="pinCode"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-
-              {errors.pinCode && (
-                <span className="text-red-500">{errors.pinCode.message}</span>
-              )}
-            </div>
-
+          
             {/* Password */}
             <div>
               <div className="flex items-center justify-between">
@@ -312,6 +164,7 @@ function Signup() {
                 </b>
               </p>
             </div>
+          
             {/* Confirm-password */}
             <div>
               <div className="flex items-center justify-between">
