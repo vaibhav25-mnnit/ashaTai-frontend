@@ -45,7 +45,7 @@ function SideFilters() {
     const user = useSelector(selectUser)
     useEffect(() => {
         // orders.revers
-        dispatch(getOrdersAsync(user.id))
+        dispatch(getOrdersAsync(user._id))
     }, [dispatch])
     return (
         <div>
@@ -193,7 +193,7 @@ function SideFilters() {
                                                                 <input
 
                                                                     id={`filter-${section.id}-${optionIdx}`}
-                                                                    name={`${section.id}[]`}
+                                                                    name={`${section.id}`}
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
@@ -233,14 +233,14 @@ function SideFilters() {
                                                         <div className="flex min-w-0 gap-x-4">
                                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
                                                                 <img
-                                                                    src={order.items[0].thumbnail}
-                                                                    alt={order.items[0].title}
+                                                                    src={order.items[0].product.thumbnail}
+                                                                    alt={order.items[0].product.title}
                                                                     className="h-full w-full object-cover object-center"
                                                                 />
                                                             </div>
                                                             <div className="ml-5">
-                                                                <p className="text-sm font-semibold leading-6 text-gray-900">{order.items[0].title}</p>
-                                                                <p className="mt-1 truncate text-sm leading-5 text-gray-500">+ {order.items.length - 1}</p>
+                                                                <p className="text-sm font-semibold leading-6 text-gray-900">{order.items[0].product.title}</p>
+                                                                {order.items.length>1 &&  <p className="mt-1 truncate text-sm leading-5 text-gray-500">+ {order.items.length - 1}</p>}
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { STATUS } from "../../app/constants";
-import { createOrder, getOrderById, getOrders } from "./orderApi";
+import { createOrder, getOrderById, getOrders, updateOrder } from "./orderApi";
 
 const initialState = {
     orders: [],
-    currentOrder: null,
+    currentOrder: null,//currentOrder
     status: STATUS.IDEAL,
 }
 
@@ -18,7 +18,7 @@ export const createOrderAsync = createAsyncThunk(
     }
 )
 
-//to get all the orders
+//to get all the orders of a user with passed ids
 export const getOrdersAsync = createAsyncThunk(
     'order/getOrdersAsync',
     async (id) => {
@@ -28,13 +28,22 @@ export const getOrdersAsync = createAsyncThunk(
 )
 
 
-//to get one order by id
+//to get a specific order of a passed idds
 export const getOrderByIdAsync = createAsyncThunk(
     'order/getOrderByIdAsync',
     async (id) => {
         const res = await getOrderById(id);
         console.log(res)
         return res
+    }
+)
+
+export const updateOrderAsync = createAsyncThunk(
+    'order/updateOrderAsyncsaaaaaa',
+    async (data) => {
+        const res = await updateOrder(data);
+        console.log(res)
+        return res;
     }
 )
 
@@ -52,8 +61,8 @@ const orderSlice = createSlice({
             .addCase(createOrderAsync.pending, (state) => {
                 state.status = STATUS.LOADING
             })
-            .addCase(createOrderAsync.fulfilled, (state, action) => {
-                state.currentOrder = action.payload
+            .addCase(createOrderAsync.fulfilled, (state, action) => { 
+                state.currentOrder = action.payload.data
                 state.status = STATUS.IDEAL
             })
 
@@ -71,6 +80,14 @@ const orderSlice = createSlice({
             })
             .addCase(getOrderByIdAsync.fulfilled, (state, action) => {
                 state.currentOrder = action.payload
+                state.status = STATUS.IDEAL
+            })
+
+            .addCase(updateOrderAsync.pending, (state) => {
+                state.status = STATUS.LOADING
+            })
+            .addCase(updateOrderAsync.fulfilled, (state, action) => {
+                state.currentOrder = action.payload.data
                 state.status = STATUS.IDEAL
             })
     }

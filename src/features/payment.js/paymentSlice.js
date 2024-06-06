@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { STATUS } from "../../app/constants";
-import { giveSessionId } from "./paymentApi";
+import { STATUS } from "../../app/constants"; 
 
 const initialState = {
-
     sessionId: null,
     paymentInfo: null,
     status: STATUS.IDEAL,
@@ -13,9 +11,8 @@ const initialState = {
 // Api to get the payment session id from backend
 export const getSessionIdAsync = createAsyncThunk(
     'payment/getSessionIdAsync',
-    async () => {
-        const res = await giveSessionId();
-        return res;
+    async (id) => { 
+        return id;
     }
 )
 

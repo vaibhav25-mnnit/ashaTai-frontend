@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toast } from 'react-hot-toast'
-import { cashfreeSandbox } from "cashfree-pg-sdk-javascript";
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import AddressInputFrom from '../components/AddressInputFrom'
 
@@ -15,8 +14,8 @@ import { selectAuthStatus, selectUser, updateUser } from '../features/auth/authS
 import { createOrderAsync, selectCurrentOreder, selectOrderStatus } from '../features/order/orderSlice'
 import { getSessionIdAsync, selectPaymentSessionId, selectPaymentStatus } from '../features/payment.js/paymentSlice'
 import { selectCartProducts, selectCartStatus, updateCart, deleteItem, resetCartAsync } from '../features/cart/cartSlice'
-import Loader from '../components/Loader'
-// import { giveSessionId } from '../features/payment.js/paymentApi';
+import Loader from '../components/Loader' 
+import { startPayment } from '../features/payment.js/paymentApi';
 
 
 export default function NewCheckout() {
@@ -27,7 +26,7 @@ export default function NewCheckout() {
     const Products = useSelector(selectCartProducts)
     const cartStatus = useSelector(selectCartStatus)
     const user = useSelector(selectUser)
-    const currentOrder = useSelector(selectCurrentOreder)
+    const currentOrder   = useSelector(selectCurrentOreder)
     const authStatus = useSelector(selectAuthStatus)
     const orderStatus = useSelector(selectOrderStatus)
     const paymentStatus = useSelector(selectPaymentStatus)
@@ -72,10 +71,24 @@ export default function NewCheckout() {
         setDiscount(discount)
         setTotalPrice(totalPrice)
     }
-
     useEffect(() => {
         updatePrice();
     }, [Products])
+
+
+    const handlePostOrder = () => {
+        if (currentOrder.paymentMethod === 'cash') {
+            navigate(`/order-success/${currentOrder.id}/success`, { replace: true })
+        }else if (paymentMethod === 'online')  {  
+            setId(currentOrder.payment_session_id);
+            console.log(currentOrder.payment_session_id);
+            startPayment(currentOrder.payment_session_id)
+        }
+    }
+    useEffect(() => {
+        if(currentOrder)
+         handlePostOrder();
+    }, [currentOrder])
 
     //to close the address modal
     const Cancel = () => {
@@ -97,77 +110,19 @@ export default function NewCheckout() {
             address: user.selectedAddress    
         } 
 
-        // if (paymentMethod === 'cash') {
-        //     const res = await fetch('http://localhost:5000/pay/create-order?mode=cash', {
-        //         method: "POST",
-        //         body: JSON.stringify({
-        //             ...order,
-        //             paymentDetails: {
-        //                 method: 'cash',
-        //             }
-        //         }),
-        //         headers: { 'content-type': 'application/json' },
-        //     })
-        //     const d = await res.json();
-        //     const o = await d.data;
-
-        //     navigate(`/order-success/${o.id}/success`, { replace: true })
-
-        // } else if (paymentMethod === 'online') {
-        //     await setOpenPayment(true)
-        //     await startPayment(order);
-        // } else {
-        //     alert("Please Select Payment method")
-        // }
-        /*
         if (paymentMethod === 'cash') {
-            // alert('Ordering through cod.')
-            await dispatch(createOrderAsync({
-                user: user.id,
-                items: Products,
-                paymentDetails: {
-                    method: 'cash',
-                },
-                priceDetails: {
-                    totalPrice: totalPrice,
-                    discount: discount,
-                    toPay: totalPrice - discount
-                },
-     
-                address: user.selectedAddress
-            }))
-        }
-        else if (paymentMethod === 'online') {
-            await setOpenPayment(true)
-            await startPayment();
-        }
-        else {
+            order.paymentDetails = {
+                method: 'cash',
+            }
+            dispatch(createOrderAsync(order));
+        } else if (paymentMethod === 'online') {
+            console.log("online payment");
+            setOpenPayment(true)
+            dispatch(createOrderAsync(order));
+        } else {
             alert("Please Select Payment method")
         }
-        */
-    }
-
-    const getSessionId = async (order) => {
-
-        const data = {
-            user: "64e4edf374e34b3d2365e054",
-            items: Products,
-            priceDetails: {
-                totalPrice: totalPrice,
-                discount: discount,
-                toPay: totalPrice - discount
-            },
-            address: user.selectedAddress
-        }
-
-        const res = await fetch('http://localhost:5000/pay/create-order?mode=online', {
-            method: "POST",
-            body: JSON.stringify(order),
-            headers: { 'content-type': 'application/json' },
-        })
-        const d = await res.json();
-        setId(d.payment_session_id)
-        return d.payment_session_id;
+        
     }
 
     const getPaymentStatus = async (id) => {
@@ -190,66 +145,69 @@ export default function NewCheckout() {
         const d = await updatedOrder.json()
         return d;
     }
+
     //to start the payment
-    const startPayment = async (order) => {
+    // const startPayment = async (PaymentSessionId) => {
+    //     let cashfree = new cashfreeSandbox.Cashfree(PaymentSessionId);
 
-        const PaymentSessionId = await getSessionId(order);
-        setId(PaymentSessionId)
-        // console.log(PaymentSessionId)
-        let cashfree = new cashfreeSandbox.Cashfree(PaymentSessionId);
+    //     const dropinConfig = {
+            
+    //         components: [
+    //             "order-details",
+    //             "card",
+    //             "netbanking",
+    //             "upi",
+    //         ],
 
-        const dropinConfig = {
-            components: [
-                "order-details",
-                "card",
-                "netbanking",
-                "upi",
-            ],
+    //         onSuccess: async function (data) {
+    //             console.log('from success function')
+    //             console.log(data);
+    //             console.log("payment is successfull redirect")
+               
+    //             /*
 
-            onSuccess: async function (data) {
-                // console.log('from success function')
-                // console.log(data);
-                // console.log("payment is successfull redirect")
-                const paymentDetails = await getPaymentStatus(data.order.orderId)
-                // console.log(paymentDetails)
-                const update = { ...paymentDetails, transaction_data: data }
+    //             const paymentDetails = await getPaymentStatus(data.order.orderId)
+    //             // console.log(paymentDetails)
+    //             const update = { ...paymentDetails, transaction_data: data }
 
 
-                const up = await updateOrder(data.order.orderId, update)
-                // console.log('updated order')
-                // console.log(up)
-                if (paymentDetails[0].payment_status === 'SUCCESS') {
-                    navigate(`/order-success/${data.order.orderId}/success`, { replace: true })
-                }
-                else
-                    navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
+    //             const up = await updateOrder(data.order.orderId, update)
+    //             // console.log('updated order')
+    //             // console.log(up)
+    //             if (paymentDetails[0].payment_status === 'SUCCESS') {
+    //                 navigate(`/order-success/${data.order.orderId}/success`, { replace: true })
+    //             }
+    //             else
+    //                 navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
+    //             */
+    //         },
+    //         onFailure: async function (data) {
+    //             console.log('from failure function')
+    //             console.log(data);
+    //             console.log("payment is un-successfull redirect")
+    //             /*
+    //             const paymentDetails = await getPaymentStatus(data.order.orderId)
+    //             // console.log(paymentDetails)
+    //             const update = { ...paymentDetails, transaction_data: data }
+    //             const up = await updateOrder(data.order.orderId, update)
+    //             // console.log('updated order')
+    //             // console.log(up)
+    //             navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
+    //             */
+    //         },
 
-            },
-            onFailure: async function (data) {
-                // console.log('form failure function')
-                // console.log(data);
-                const paymentDetails = await getPaymentStatus(data.order.orderId)
-                // console.log(paymentDetails)
-                const update = { ...paymentDetails, transaction_data: data }
-                const up = await updateOrder(data.order.orderId, update)
-                // console.log('updated order')
-                // console.log(up)
-                navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
-            },
+    //         style: {
+    //             backgroundColor: "#ffffff",
+    //             color: "#11385b",
+    //             fontSize: "14px",
+    //             fontFamily: "Lato",
+    //             errorColor: "#ff0000",
+    //             theme: "light",
+    //         }
+    //     }
 
-            style: {
-                backgroundColor: "#ffffff",
-                color: "#11385b",
-                fontSize: "14px",
-                fontFamily: "Lato",
-                errorColor: "#ff0000",
-                theme: "light",
-            }
-        }
-
-        await cashfree.drop(document.getElementById("render"), dropinConfig);
-    }
-
+    //     await cashfree.drop(document.getElementById("render"), dropinConfig);
+    // }
 
     const handleVerification = ({ token, ekey }) => {
         setCashButton(false)
@@ -265,8 +223,7 @@ export default function NewCheckout() {
     return (
         <>
             {Products.length <= 0 && <Navigate replace={true} to='/' />}
-
-            {currentOrder && <Navigate replace={true} to={`/order-success/${currentOrder.id}/success`} />}
+            
 
             <div className='main'>
                 {/* <div className='upper-main'> */}
