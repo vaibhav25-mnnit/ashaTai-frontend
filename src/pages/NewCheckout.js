@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toast } from 'react-hot-toast'
+import { cashfreeSandbox } from "cashfree-pg-sdk-javascript"; 
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import AddressInputFrom from '../components/AddressInputFrom'
 
@@ -14,8 +15,7 @@ import { selectAuthStatus, selectUser, updateUser } from '../features/auth/authS
 import { createOrderAsync, selectCurrentOreder, selectOrderStatus } from '../features/order/orderSlice'
 import { getSessionIdAsync, selectPaymentSessionId, selectPaymentStatus } from '../features/payment.js/paymentSlice'
 import { selectCartProducts, selectCartStatus, updateCart, deleteItem, resetCartAsync } from '../features/cart/cartSlice'
-import Loader from '../components/Loader' 
-import { startPayment } from '../features/payment.js/paymentApi';
+import Loader from '../components/Loader'  
 
 
 export default function NewCheckout() {
@@ -124,13 +124,7 @@ export default function NewCheckout() {
         }
         
     }
-
-    const getPaymentStatus = async (id) => {
-        const res = await fetch('http://localhost:5000/pay/verify-order/' + id)
-        const d = await res.json();
-        return d;
-    }
-
+     
     const updateOrder = async (id, data) => {
         const update = {
             paymentDetails: data
@@ -147,69 +141,46 @@ export default function NewCheckout() {
     }
 
     //to start the payment
-    // const startPayment = async (PaymentSessionId) => {
-    //     let cashfree = new cashfreeSandbox.Cashfree(PaymentSessionId);
-
-    //     const dropinConfig = {
+    //TODO:this function should be called from outside the comoponent
+    const startPayment = async (PaymentSessionId) => {
+        let cashfree = new cashfreeSandbox.Cashfree(PaymentSessionId);
+    
+        const dropinConfig = {
             
-    //         components: [
-    //             "order-details",
-    //             "card",
-    //             "netbanking",
-    //             "upi",
-    //         ],
-
-    //         onSuccess: async function (data) {
-    //             console.log('from success function')
-    //             console.log(data);
-    //             console.log("payment is successfull redirect")
-               
-    //             /*
-
-    //             const paymentDetails = await getPaymentStatus(data.order.orderId)
-    //             // console.log(paymentDetails)
-    //             const update = { ...paymentDetails, transaction_data: data }
-
-
-    //             const up = await updateOrder(data.order.orderId, update)
-    //             // console.log('updated order')
-    //             // console.log(up)
-    //             if (paymentDetails[0].payment_status === 'SUCCESS') {
-    //                 navigate(`/order-success/${data.order.orderId}/success`, { replace: true })
-    //             }
-    //             else
-    //                 navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
-    //             */
-    //         },
-    //         onFailure: async function (data) {
-    //             console.log('from failure function')
-    //             console.log(data);
-    //             console.log("payment is un-successfull redirect")
-    //             /*
-    //             const paymentDetails = await getPaymentStatus(data.order.orderId)
-    //             // console.log(paymentDetails)
-    //             const update = { ...paymentDetails, transaction_data: data }
-    //             const up = await updateOrder(data.order.orderId, update)
-    //             // console.log('updated order')
-    //             // console.log(up)
-    //             navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })
-    //             */
-    //         },
-
-    //         style: {
-    //             backgroundColor: "#ffffff",
-    //             color: "#11385b",
-    //             fontSize: "14px",
-    //             fontFamily: "Lato",
-    //             errorColor: "#ff0000",
-    //             theme: "light",
-    //         }
-    //     }
-
-    //     await cashfree.drop(document.getElementById("render"), dropinConfig);
-    // }
-
-    const handleVerification = ({ token, ekey }) => {
+            components: [
+                "order-details",
+                "card",
+                "netbanking",
+                "upi",
+            ],
+    
+            onSuccess: async function (data) {
+                console.log('from success function')
+                console.log(data);
+                console.log("payment is successfull redirect")
+                navigate(`/order-success/${data.order.orderId}/failed`, { replace: true })                            
+            },
+           
+            onFailure: async function (data) {
+                console.log('from failure function')
+                console.log(data);
+                console.log("payment is un-successfull redirect")
+                navigate(`/order-success/${data.order.orderId}/failed`, { replace: true });         
+            },
+    
+            style: {
+                backgroundColor: "#ffffff",
+                color: "#11385b",
+                fontSize: "14px",
+                fontFamily: "Lato",
+                errorColor: "#ff0000",
+                theme: "light",
+            }
+        }  
+        await cashfree.drop(document.getElementById("render"), dropinConfig);
+     }
+    
+     const handleVerification = ({ token, ekey }) => {
         setCashButton(false)
         // const res = await fetch('https://hcaptcha.com/siteverify', {
         //     method: 'POST',
