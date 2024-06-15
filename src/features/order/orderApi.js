@@ -16,8 +16,6 @@ export async function createOrder(data) {
 }
 
 export async function getOrders(id) {
-  // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/orders?user=` + user)
-
   const response = await fetch(
     `${process.env.REACT_APP_BACKEND_URL}/order/all/` + id
   );
@@ -28,7 +26,7 @@ export async function getOrders(id) {
 }
 
 export async function getOrderById(id) {
-  const res = await fetch("http://localhost:5000/order/" + id);
+  const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/order/` + id);
   const d = await res.json();
   return new Promise((resolve, reject) => {
     resolve(d);
