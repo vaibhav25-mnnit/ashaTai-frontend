@@ -1,4 +1,4 @@
-  {
+{
   "products": [
     {
       "id": 1,
@@ -48,9 +48,7 @@
       "brand": "Samsung",
       "category": "smartphones",
       "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/3/1.jpg"
-      ]
+      "images": ["https://i.dummyjson.com/data/products/3/1.jpg"]
     },
     {
       "id": 4,
@@ -1428,9 +1426,7 @@
       "brand": "Fashion Jewellery",
       "category": "womens-jewellery",
       "thumbnail": "https://i.dummyjson.com/data/products/78/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/78/thumbnail.jpg"
-      ]
+      "images": ["https://i.dummyjson.com/data/products/78/thumbnail.jpg"]
     },
     {
       "id": 79,
@@ -1443,9 +1439,7 @@
       "brand": "Fashion Jewellery",
       "category": "womens-jewellery",
       "thumbnail": "https://i.dummyjson.com/data/products/79/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/79/1.jpg"
-      ]
+      "images": ["https://i.dummyjson.com/data/products/79/1.jpg"]
     },
     {
       "id": 80,
@@ -2985,6 +2979,140 @@
     {
       "id": 1,
       "sessionId": "session_pahVJk1auSvM7TalxnU5r54EbWWvoMvZqXC5l3HQJrZJG8THX3A9ggxUqUF4CxqItmIXgei_498R_CYp6MEZ9ljSxlzDm9gEVUBchoGUoNRC"
+    }
+  ],
+  "pa": [
+    {
+      "order": {
+        "activePaymentMethod": "netbanking",
+        "errorText": null,
+        "message": "Order is not Paid yet",
+        "orderId": "666583edd8629e3fc0721077",
+        "status": "ACTIVE"
+      },
+      "transaction": {
+        "transactionAmount": "2.98",
+        "transactionId": "14934519840",
+        "txMsg": "",
+        "txStatus": "FAILED"
+      }
+    },
+    {
+      "auth_id": null,
+      "authorization": null,
+      "bank_reference": null,
+      "cf_payment_id": 14934519840,
+      "entity": "payment",
+      "error_details": {
+        "error_code": "",
+        "error_description": "",
+        "error_reason": "",
+        "error_source": "",
+        "error_code_raw": "55",
+        "error_description_raw": "Incorrect personal identification number",
+        "error_subcode_raw": ""
+      },
+      "is_captured": false,
+      "order_amount": 2.98,
+      "order_id": "666583edd8629e3fc0721077",
+      "payment_amount": 2.98,
+      "payment_completion_time": "2024-06-09T16:00:22+05:30",
+      "payment_currency": "INR",
+      "payment_gateway_details": null,
+      "payment_group": "net_banking",
+      "payment_message": null,
+      "payment_method": {
+        "netbanking": {
+          "channel": "link",
+          "netbanking_bank_code": 3022,
+          "netbanking_bank_name": "ICICI Bank",
+          "netbanking_ifsc": "",
+          "netbanking_account_number": ""
+        }
+      },
+      "payment_offers": [],
+      "payment_status": "FAILED",
+      "payment_time": "2024-06-09T16:00:04+05:30"
+    },
+    {
+      "auth_id": null,
+      "authorization": null,
+      "bank_reference": null,
+      "cf_payment_id": 14934519912,
+      "entity": "payment",
+      "error_details": null,
+      "is_captured": true,
+      "order_amount": 2.99,
+      "order_id": "66658a29d8629e3fc072108b",
+      "payment_amount": 2.99,
+      "payment_completion_time": "2024-06-09T16:25:52+05:30",
+      "payment_currency": "INR",
+      "payment_gateway_details": null,
+      "payment_group": "net_banking",
+      "payment_message": null,
+      "payment_method": {
+        "netbanking": {
+          "channel": "link",
+          "netbanking_bank_code": 3010,
+          "netbanking_bank_name": "CSB Bank Limited",
+          "netbanking_ifsc": "",
+          "netbanking_account_number": ""
+        }
+      },
+      "payment_offers": [],
+      "payment_status": "SUCCESS",
+      "payment_time": "2024-06-09T16:25:43+05:30"
+    },
+    {
+      "auth_id": null,
+      "authorization": null,
+      "bank_reference": null,
+      "cf_payment_id": 14934519937,
+      "entity": "payment",
+      "error_details": null,
+      "is_captured": true,
+      "order_amount": 1.99,
+      "order_id": "66658d3ed8629e3fc072109d",
+      "payment_amount": 1.99,
+      "payment_completion_time": "2024-06-09T16:40:08+05:30",
+      "payment_currency": "INR",
+      "payment_gateway_details": null,
+      "payment_group": "upi",
+      "payment_message": null,
+      "payment_method": {
+        "upi": {
+          "channel": "qrcode"
+        }
+      },
+      "payment_offers": [],
+      "payment_status": "SUCCESS",
+      "payment_time": "2024-06-09T16:38:50+05:30"
+    },
+    {
+      "auth_id": null,
+      "authorization": null,
+      "bank_reference": "1234567890",
+      "cf_payment_id": 14934520015,
+      "entity": "payment",
+      "error_details": null,
+      "is_captured": true,
+      "order_amount": 3.99,
+      "order_id": "66659319d8629e3fc07210c1",
+      "payment_amount": 3.99,
+      "payment_completion_time": "2024-06-09T17:04:31+05:30",
+      "payment_currency": "INR",
+      "payment_gateway_details": null,
+      "payment_group": "upi",
+      "payment_message": "Simulated response message",
+      "payment_method": {
+        "upi": {
+          "channel": "collect",
+          "upi_id": "testsuccess@gocash"
+        }
+      },
+      "payment_offers": null,
+      "payment_status": "SUCCESS",
+      "payment_time": "2024-06-09T17:04:01+05:30"
     }
   ]
 }
