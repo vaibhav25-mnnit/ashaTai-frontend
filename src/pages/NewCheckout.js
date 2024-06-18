@@ -81,7 +81,7 @@ export default function NewCheckout() {
     let totalPrice = 0,
       discount = 0;
     Products.forEach((p) => {
-      totalPrice += p.product.price * p.quantity;
+      totalPrice += Math.round(p.product.price * p.quantity);
       discount +=
         Math.round(p.product.price * (p.product.discountPercentage / 100)) *
         p.quantity;
@@ -122,11 +122,12 @@ export default function NewCheckout() {
       priceDetails: {
         totalPrice: totalPrice,
         discount: discount,
-        toPay: totalPrice - discount,
+        toPay: Math.round(totalPrice - discount),
       },
       address: user.selectedAddress,
     };
 
+    console.log(order);
     if (order.address === null || order.address === undefined) {
       toast.error("Please select the delivery address.");
       return;
@@ -209,14 +210,9 @@ export default function NewCheckout() {
     <>
       {Products.length <= 0 && <Navigate replace={true} to="/" />}
 
-      <div className="main">
+      <div className="main p-5">
         {/* <div className='upper-main'> */}
-        <div
-          className="grid grid-cols-6 gap-4 px-20"
-          style={{
-            padding: "0 8rem",
-          }}
-        >
+        <div className="w-full grid grid-cols-6 gap-4 md:px-32">
           {/* Left side section */}
           <div className="col-span-6 lg:col-span-4">
             {/* Login Details */}
@@ -398,7 +394,10 @@ export default function NewCheckout() {
                                           ) * p.quantity}
                                         </p>
                                         <p className="ml-4 tracking-tight text-gray-900 line-through">
-                                          ${p.quantity * p.product.price}
+                                          $
+                                          {Math.round(
+                                            p.quantity * p.product.price
+                                          )}
                                         </p>
                                       </div>
                                     </div>
@@ -489,7 +488,7 @@ export default function NewCheckout() {
                     )}
                   </div>
 
-                  <div className="flex flex-col  gap-y-5">
+                  <div className="flex flex-col gap-y-5">
                     <div className="flex items-center gap-x-3">
                       <input
                         id="cash"
@@ -509,19 +508,22 @@ export default function NewCheckout() {
                         Cash On Delivery
                       </label>
                     </div>
+
                     {paymentMethod === "cash" && (
-                      <div className="flex ml-10  items-center">
+                      <div className="md:flex overflow-x-hidden items-center">
                         <HCaptcha
+                          className="border "
                           sitekey="6db06f65-536e-4d2c-8dc0-7a5767fbeb90"
                           onVerify={(token, ekey) =>
                             handleVerification(token, ekey)
                           }
                         />
+                        <br />
                         <button
                           disabled={
                             cashButton || orderStatus === STATUS.LOADING
                           }
-                          className={`ml-10 w-full flex block cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-3 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700  ${
+                          className={` md:ml-10 w-full flex block cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-3 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700  ${
                             (cashButton || orderStatus === STATUS.LOADING) &&
                             "cursor-not-allowed bg-indigo-500 text-white font-bold py-2 px-4 rounded opacity-50 "
                           }`}
