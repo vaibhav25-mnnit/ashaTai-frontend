@@ -30,7 +30,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ dontShowNav, title, children }) {
+export default function Navbar({ ShowNav = false, title, children }) {
   const dispatch = useDispatch();
   const currentuser = useSelector(selectUser);
   const user = {
@@ -51,7 +51,7 @@ export default function Navbar({ dontShowNav, title, children }) {
     }
   };
 
-  const [scrollDirection, setScrollDirection] = useState("up");
+  const [scrollDirection, setScrollDirection] = useState("down");
   const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   useEffect(() => {
@@ -98,12 +98,10 @@ export default function Navbar({ dontShowNav, title, children }) {
     <>
       {/* Nav bar */}
 
-      {!dontShowNav && (
+      {!ShowNav && (
         <>
           <nav
-            className={`dark:bg-black dark:text-white bg-gray-800 fixed w-full top-0 z-40 ${
-              scrollDirection === "up" ? "opacity-100" : "opacity-0"
-            }  `}
+            className={`dark:bg-black dark:text-white bg-gray-800 fixed w-full top-0 z-40`}
           >
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
@@ -152,6 +150,7 @@ export default function Navbar({ dontShowNav, title, children }) {
                     </div>
                   </div>
                 </div>
+
                 {/* extreme right for cart,user profile */}
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2  ml-0 sm:static sm:inset-auto  sm:pr-0 sm:mr-16">
                   {currentuser && (
@@ -420,7 +419,7 @@ export default function Navbar({ dontShowNav, title, children }) {
       {
         <div className="min-h-full ">
           {title && (
-            <header className="bg-white shadow">
+            <header className={`${!ShowNav && "mt-16"} bg-white shadow`}>
               <div className="mx-auto max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                   {title}

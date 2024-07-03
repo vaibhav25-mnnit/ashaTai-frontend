@@ -1,132 +1,130 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 // import './App.css'
 
 //checking if submodule works or not in frontend
 
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import { Toaster } from 'react-hot-toast';
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import { Toaster } from "react-hot-toast";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
-import CartPage from './pages/CartPage'; 
-import NewCheckout from './pages/NewCheckout';
-import ProductDetailPage from './features/product-list/components/ProductDetail'
-import NotFound from './pages/NotFound'
-import Protected from './features/auth/components/Protected';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCartItems } from './features/cart/cartSlice';
-import { selectUser } from './features/auth/authSlice';
-import Navbar from './features/navbar/Navbar'
-import Orders from './features/order/components/Orders';
-import Success from './components/Success';
-import OrdersPage from './pages/OrdersPage';
-import OrderDetailsPage from './pages/OrderDetailsPage';
-import CashFreePayment from './components/CashFreePayment';
-import Products from './features/product-list/components/Products'; 
-import SendResetMail from './features/resetPassword.js/components/SendResetMail';
-import ResetPassword from './features/resetPassword.js/components/ResetPassword';
-
-import AOS from 'aos';
-import 'aos/dist/aos.css'
-
+import CartPage from "./pages/CartPage";
+import NewCheckout from "./pages/NewCheckout";
+import ProductDetailPage from "./features/product-list/components/ProductDetail";
+import NotFound from "./pages/NotFound";
+import Protected from "./features/auth/components/Protected";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "./features/cart/cartSlice";
+import { selectUser } from "./features/auth/authSlice";
+import Navbar from "./features/navbar/Navbar";
+import Orders from "./features/order/components/Orders";
+import Success from "./components/Success";
+import OrdersPage from "./pages/OrdersPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+import CashFreePayment from "./components/CashFreePayment";
+import Products from "./features/product-list/components/Products";
+import SendResetMail from "./features/resetPassword.js/components/SendResetMail";
+import ResetPassword from "./features/resetPassword.js/components/ResetPassword";
+import AddProductPage from "./pages/AddProductPage";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import HomePage from "./pages/HomePage";
+import CategoryPage from "./pages/CategoryPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home /> 
+    element: <HomePage />,
   },
   {
     path: "/shop-all",
-    element: <Navbar children={<Products />} />  ,
+    element: <Navbar children={<Products />} />,
   },
   {
-    path: '/login',
-    element: <LoginPage />
+    path: "/category/:category",
+    element: <CategoryPage />,
   },
   {
-    path: '/send-reset-mail',
-    element: <SendResetMail />
+    path: "/login",
+    element: <LoginPage />,
   },
   {
-    path: '/reset-password/:token',
-    element: <ResetPassword />
+    path: "/send-reset-mail",
+    element: <SendResetMail />,
   },
   {
-    path: '/signup',
-    element: <SignupPage />
+    path: "/reset-password/:token",
+    element: <ResetPassword />,
   },
   {
-    path: '/cart',
-    element: <Protected component={<CartPage />} />
+    path: "/signup",
+    element: <SignupPage />,
   },
   {
-    path: '/checkout',
-    element: <Protected component={<Navbar dontShowNav={true} title="Checkout"  children={<NewCheckout />} />} />
+    path: "/cart",
+    element: <Protected component={<CartPage />} />,
+  },
+  {
+    path: "/checkout",
+    element: (
+      <Protected
+        component={
+          <Navbar ShowNav={true} title="Checkout" children={<NewCheckout />} />
+        }
+      />
+    ),
     // element: <Protected component={<NewCheckout />}/>
   },
   {
-    path: '/product-detail/:id',
+    path: "/product-detail/:id",
     // element: <Protected component={<ProductDetailPage />} />
-    element:  <ProductDetailPage />  
+    element: <ProductDetailPage />,
   },
   {
-    path: '/orders',
-    element: <Protected component={<OrdersPage />} />
+    path: "/orders",
+    element: <Protected component={<OrdersPage />} />,
   },
   {
-    path: '/order-success/:id/:status',
-    element: <Success />
+    path: "/order-success/:id/:status",
+    element: <Success />,
     // element: <Protected component={<Success />} />
-
   },
   {
-    path: '/order-details/:id',
+    path: "/order-details/:id",
     // element: <Protected component={<OrderDetailsPage />} />
-    element: <OrderDetailsPage />
-
+    element: <OrderDetailsPage />,
   },
   {
-    path: '/pay',
-    // element: <Protected component={<OrderDetailsPage />} />
-    element: <CashFreePayment />
+    path: "/add-product",
+    element: <AddProductPage />,
   },
   {
-    path: '*',
-    element: <NotFound />
-  }
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 function App() {
-
   const dispatch = useDispatch();
   const logedInUser = useSelector(selectUser);
 
-  
-
   useEffect(() => {
     if (logedInUser) {
-      dispatch(getCartItems(logedInUser._id))
+      dispatch(getCartItems(logedInUser._id));
     }
-  }, [dispatch, logedInUser])
+  }, [dispatch, logedInUser]);
 
   useEffect(() => {
-    AOS.init()
-  }, [])
-
+    AOS.init();
+  }, []);
 
   return (
     <div>
       <RouterProvider router={router} />
-      <Toaster
-        position="top-center"
-      />
+      <Toaster position="top-center" />
     </div>
-  )
+  );
 }
 
 export default App;
