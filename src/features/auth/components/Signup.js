@@ -26,15 +26,13 @@ function Signup() {
   const navigate = useNavigate();
   //handle form submission
   const onSubmit = async (data) => {
-    
-    await dispatch(
+    dispatch(
       createUser({
         name: data.name,
         email: data.email,
-        password: data.password
+        password: data.password,
       })
     );
-
   };
 
   useEffect(() => {
@@ -52,8 +50,8 @@ function Signup() {
   }, [status]);
 
   return (
-    <> 
-   {user && <Navigate to="/" replace="true" />}
+    <>
+      {user && <Navigate to="/" replace="true" />}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Link to="/">
@@ -123,7 +121,6 @@ function Signup() {
               )}
             </div>
 
-          
             {/* Password */}
             <div>
               <div className="flex items-center justify-between">
@@ -164,7 +161,7 @@ function Signup() {
                 </b>
               </p>
             </div>
-          
+
             {/* Confirm-password */}
             <div>
               <div className="flex items-center justify-between">

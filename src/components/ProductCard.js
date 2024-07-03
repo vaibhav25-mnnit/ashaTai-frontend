@@ -1,14 +1,21 @@
-import React from 'react'
-import './styles/ProductCard.css'
-import { Link } from 'react-router-dom'
+import React from "react";
+import "./styles/ProductCard.css";
+import { Link } from "react-router-dom";
 
-import img from '../images/2.png'
+const dummyProduct = {
+  title: "Dummy Product",
+  price: 999,
+  rating: 4.4,
+  thumbnail:
+    "https://firebasestorage.googleapis.com/v0/b/asha-tai.appspot.com/o/products%2FShangdana%20chatney?alt=media&token=e1f01a3d-122c-49e2-82a5-89972cbd3f46",
+};
 
-function ProductCard({ heading = 'samle heading', image_src = img }) {
-    return (
-
-        <div  >
-            <Link to='#' className="light-shadow 
+function ProductCard({ product = dummyProduct }) {
+  return (
+    <div>
+      <Link
+        to={`/product-detail/${product.id}`}
+        className="light-shadow 
                                     h-full  w-auto 
                                     flex flex-col gap-3 items-center justify-center 
                                     overflow-visible 
@@ -21,19 +28,22 @@ function ProductCard({ heading = 'samle heading', image_src = img }) {
                                     dark:border
                                     dark:rounded-2xl
                                     dark:shadow-gray-500
-                                    dark:shadow-lg">
-
-                <div className="category-container">
-                    <img
-                        alt={heading}
-                        src={image_src}
-                        className=""
-                    />
-                </div>
-                <h1 className="font-semibold uppercase ">{heading}</h1>
-            </Link>
+                                    dark:shadow-lg"
+      >
+        <div className="category-container">
+          <img src={product.thumbnail} alt={product.title} className="" />
         </div>
-    )
+        <h1 className="font-semibold uppercase ">{product.title}</h1>
+
+        <div className="flex justify-between items-center w-full px-5">
+          <h3 className="text-sm font-medium  text-gray-900">
+            ₹{product.price}
+          </h3>
+          <h3 className="mt-1 text-sm text-gray-500">{product.rating}⭐</h3>
+        </div>
+      </Link>
+    </div>
+  );
 }
 
-export default ProductCard
+export default ProductCard;
