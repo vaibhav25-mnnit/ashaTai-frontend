@@ -5,7 +5,7 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { resetUser, selectUser } from "../auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCart, selectCartCount } from "../cart/cartSlice";
@@ -13,6 +13,8 @@ import { resetProducts } from "../product-list/productSlice";
 import Cart from "../cart/components/Cart";
 import logo from "../../images/logo.png";
 import "../../components/styles/navbar.css";
+import { resetOrders } from "../order/orderSlice";
+import toast from "react-hot-toast";
 
 const navigation = [
   { name: "Shop All", href: "/shop-all" },
@@ -21,8 +23,8 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Your Orders", href: "/orders" },
+  { name: "Your Profile", href: "/profile" },
+  { name: "Your Orders", href: "/profile?tar=order" },
   { name: "Sign out", href: "#" },
 ];
 
@@ -33,6 +35,7 @@ function classNames(...classes) {
 export default function Navbar({ ShowNav = false, title, children }) {
   const dispatch = useDispatch();
   const currentuser = useSelector(selectUser);
+  const navigate = useNavigate();
   const user = {
     name: currentuser ? currentuser.name : "Guest",
     imageUrl:
@@ -45,9 +48,13 @@ export default function Navbar({ ShowNav = false, title, children }) {
 
   const handleClick = (e, item) => {
     if (item.name === "Sign out") {
+      localStorage.clear("userToken");
       dispatch(resetProducts());
       dispatch(resetCart());
       dispatch(resetUser());
+      dispatch(resetOrders());
+      navigate("/");
+      toast.success("logged out sccessfully.");
     }
   };
 
@@ -304,7 +311,7 @@ export default function Navbar({ ShowNav = false, title, children }) {
                               </div>
                             </div>
 
-                            <Cart width="full" flag={true} />
+                            <Cart />
                           </div>
                         </Dialog.Panel>
                       </Transition.Child>

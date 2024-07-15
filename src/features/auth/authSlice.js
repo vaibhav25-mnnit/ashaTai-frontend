@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { STATUS } from "../../app/constants";
-import { createUserAPi, loginUserApi, updateUserApi } from "./authApi";
+import {
+  createUserAPi,
+  getUserApi,
+  loginUserApi,
+  updateUserApi,
+} from "./authApi";
 
 const initialState = {
   user: null,
@@ -16,13 +21,19 @@ export const createUser = createAsyncThunk("auth/createUser", async (data) => {
 
 //Api to verify loging user for login page
 export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
-  const response = await loginUserApi(data); 
+  const response = await loginUserApi(data);
   return response;
 });
 
 //to update the user info
 export const updateUser = createAsyncThunk("auth/updateUser", async (data) => {
   const response = await updateUserApi(data);
+  return response;
+});
+
+//to get the user info
+export const getUser = createAsyncThunk("auth/getUser", async (id) => {
+  const response = await getUserApi(id);
   return response;
 });
 
@@ -42,13 +53,12 @@ const authSlice = createSlice({
       .addCase(createUser.pending, (state) => {
         state.status = STATUS.LOADING;
       })
-      .addCase(createUser.fulfilled, (state, action) => { 
+      .addCase(createUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.error = action.payload.message;
         state.status = STATUS.IDEAL;
       })
       .addCase(createUser.rejected, (state, action) => {
-  
         state.error = action.error.message;
         state.status = STATUS.ERROR;
       })
@@ -70,13 +80,26 @@ const authSlice = createSlice({
       .addCase(updateUser.pending, (state) => {
         state.status = STATUS.LOADING;
       })
-      .addCase(updateUser.fulfilled, (state, action) => { 
+      .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload.data;
         state.error = null;
         state.status = STATUS.IDEAL;
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.error = action.error.message;
+        state.status = STATUS.ERROR;
+      })
+
+      .addCase(getUser.pending, (state) => {
+        state.status = STATUS.LOADING;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.error = null;
+        state.status = STATUS.IDEAL;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.error = "Unable to get User Details";
         state.status = STATUS.ERROR;
       });
   },

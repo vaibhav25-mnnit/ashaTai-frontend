@@ -1,10 +1,30 @@
 import React from "react";
 import "./styles/CategoryCard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-// import { getProducts } from "../features/product-list/productSlice";
+import {
+  getProducts,
+  updateFilter,
+} from "../features/product-list/productSlice";
+import { useDispatch } from "react-redux";
 //{ thumbnail, value, label }
 function CategoryCard({ data }) {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    console.log(data);
+    dispatch(updateFilter({ id: data._id }));
+
+    dispatch(
+      getProducts({
+        filter: { section: "category", value: data.value },
+        page: 1,
+      })
+    );
+    navigate(`/category/${data.value}`);
+  };
+
   return (
     <div data-aos="zoom-in" data-aos-duration="1000">
       <Link
@@ -23,8 +43,10 @@ function CategoryCard({ data }) {
         dark:border
         dark:rounded-2xl
         dark:shadow-gray-500
-        dark:shadow-lg
+        dark:shadow-lg'
+        cursor-pointer
         "
+        // onClick={handleClick}
       >
         <div className="category-container">
           <img

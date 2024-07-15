@@ -17,7 +17,6 @@ export const addProductAsync = createAsyncThunk(
   "products/addProductAsync",
   async (data) => {
     console.log(data);
-
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/product/add`,
       {
@@ -44,15 +43,7 @@ export const getProducts = createAsyncThunk(
       queryString += `${f.section}=${f.value}&`;
     });
 
-    console.log(queryString);
-    if (queryString === "") {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/product/all?_page=${page}&_limit=${ITEMS_PER_PAGE}&`
-      );
-      const d = await res.json();
-      const totalProducts = await res.headers.get("X-total-Count");
-      return { products: d, totalProducts: totalProducts };
-    }
+    // console.log(queryString);
     const res = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/product/all?_page=${page}&_limit=${ITEMS_PER_PAGE}&` +
         queryString
@@ -84,6 +75,7 @@ export const getSelectedProduct = createAsyncThunk(
     return d;
   }
 );
+
 const productsSlice = createSlice({
   name: "products",
   initialState,

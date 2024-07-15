@@ -3,6 +3,7 @@ import ProductCard from "../../../components/ProductCard";
 import { useSelector } from "react-redux";
 export default function ProductsByCategory() {
   const products = useSelector((state) => state.products.products);
+
   return (
     <>
       <div className="flex justify-center items-start border border-rose-200 p-5 mt-5 bg-white shadow min-h-screen">

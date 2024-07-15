@@ -1,3 +1,5 @@
+import { ITEMS_PER_PAGE } from "../../app/constants";
+
 export async function createOrder(data) {
   const response = await fetch(
     `${process.env.REACT_APP_BACKEND_URL}/pay/create-order`,
@@ -15,13 +17,15 @@ export async function createOrder(data) {
   });
 }
 
-export async function getOrders(id) {
+export async function getOrders({ page, id, query }) {
   const response = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}/order/all/` + id
+    `${process.env.REACT_APP_BACKEND_URL}/order/all/${id}?_page=${page}&_limit=${ITEMS_PER_PAGE}&` +
+      query
   );
   const d = await response.json();
+  const totalOrders = await response.headers.get("X-total-Count");
   return new Promise((resolve, reject) => {
-    resolve(d);
+    resolve({ orders: d, totalOrders: totalOrders });
   });
 }
 

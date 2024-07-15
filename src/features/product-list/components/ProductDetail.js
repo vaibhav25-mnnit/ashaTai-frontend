@@ -30,7 +30,7 @@ export default function ProductDetail() {
   const [inCart, setIncart] = useState(0);
 
   useEffect(() => {
-    dispatch(getSelectedProduct(id));
+    if (id) dispatch(getSelectedProduct(id));
 
     return () => {
       dispatch(resetSelectedProducts());
