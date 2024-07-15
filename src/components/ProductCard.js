@@ -3,13 +3,18 @@ import "./styles/ProductCard.css";
 import { Link } from "react-router-dom";
 
 const dummyProduct = {
-  title: "Dummy Product",
-  price: 999,
-  rating: 4.4,
+  title: "Apple",
+  description:
+    "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
+  category: "groceries",
+  price: 1.99,
+  discountPercentage: 1.97,
+  rating: 2.96,
+  stock: 9,
   thumbnail:
-    "https://firebasestorage.googleapis.com/v0/b/asha-tai.appspot.com/o/products%2FShangdana%20chatney?alt=media&token=e1f01a3d-122c-49e2-82a5-89972cbd3f46",
+    "https://cdn.dummyjson.com/products/images/groceries/Apple/thumbnail.png",
+  id: "66605ea496b209d89e60566f",
 };
-
 function ProductCard({ product = dummyProduct }) {
   return (
     <div>

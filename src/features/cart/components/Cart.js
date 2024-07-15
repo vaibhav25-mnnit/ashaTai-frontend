@@ -38,19 +38,20 @@ function Cart({ width = "2/3", flag }) {
       ) : (
         <div className="px-5">
           <div
-            className={`mt-2  sm:mx-auto w-full max-w-7xl w-${width} px-4  sm:px-6 lg:px-8 bg-white shadow`}
+            className={`mt-2  sm:mx-auto w-full max-w-7xl w-full px-4  sm:px-6 lg:px-8 bg-white shadow`}
           >
             <div
               className={`mx-auto w-full   bg-white max-w-7xl px-4 sm:px-6 `}
             >
               <div className={`border-t  sm:px-6 `}>
-                <div className="mt-5">
+                {/* Cart Items */}
+                <div className="mt-5 h-[16rem] overflow-y-scroll">
                   <div className="flow-root overflow-hidden">
                     <ul className={`-my-6 divide-y divide-gray-200`}>
                       {Products.map((p) => (
                         <li
                           key={p.product.id}
-                          className={`flex py-6  ${
+                          className={`flex py-6 px-5  ${
                             status === STATUS.LOADING && "blur-sm animate-pulse"
                           } `}
                         >
@@ -134,6 +135,7 @@ function Cart({ width = "2/3", flag }) {
                   </div>
                 </div>
 
+                {/*Pricing details  */}
                 <div
                   className={`mt-5 border-t border-gray-200 px-4 py-6 sm:px-6`}
                 >

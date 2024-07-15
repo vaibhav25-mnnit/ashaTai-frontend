@@ -1,83 +1,90 @@
 export async function createUserAPi(data) {
-  const res = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}/auth/signup`,
-    {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const response = await res.json(); 
-  return new Promise((resolve,reject) => {
-    if(response.data)
-      return  resolve({ user: response.data,message: response.message });
-    
-    return reject( reject({
-      user: null,
-      message: response.message
-    }))
-});
-
-}
-
-export async function loginUserApi(data) {
- 
-  const res = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-    {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const response = await res.json();
-   
-    return new Promise((resolve,reject) => {
-      if(response.data)
-        return  resolve({ data: response.data });
-      
-      return reject( reject({
+  return new Promise((resolve, reject) => {
+    if (response.data) {
+      localStorage.setItem("userToken", response.data._id);
+      return resolve({ user: response.data, message: response.message });
+    }
+
+    return reject(
+      reject({
         user: null,
-        message: response.message
-      }))
+        message: response.message,
+      })
+    );
   });
 }
 
-export async function updateUserApi({user,add,edit,address}) {
-  
-  let url = `${process.env.REACT_APP_BACKEND_URL}/user/update/${user}?`
-  if(add){
-    url+=`add=true`
-  }
+export async function loginUserApi(data) {
+  const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if(edit){
-   url+=`edit=${edit}` 
-  }
+  const response = await res.json();
 
-  console.log(url);
-  const res = await fetch(
-    url,
-    {
-      method: "PATCH",
-      body: JSON.stringify(address),
-      headers: { "content-type": "application/json" },
+  return new Promise((resolve, reject) => {
+    if (response.data) {
+      localStorage.setItem("userToken", response.data._id);
+      return resolve({ data: response.data });
     }
+
+    return reject(
+      reject({
+        user: null,
+        message: response.message,
+      })
+    );
+  });
+}
+
+export async function updateUserApi({ user, add, edit, address }) {
+  let url = `${process.env.REACT_APP_BACKEND_URL}/user/update/${user}?`;
+  if (add) {
+    url += `add=true`;
+  }
+
+  if (edit) {
+    url += `edit=${edit}`;
+  }
+
+  // console.log(url);
+  const res = await fetch(url, {
+    method: "PATCH",
+    body: JSON.stringify(address),
+    headers: { "content-type": "application/json" },
+  });
+  const response = await res.json();
+
+  return new Promise((resolve, reject) => {
+    if (response.success === true) return resolve({ data: response.data });
+
+    return reject(
+      reject({
+        user: null,
+        message: response.message,
+      })
+    );
+  });
+}
+
+export async function getUserApi({ id }) {
+  const response = await fetch(
+    `${process.env.REACT_APP_BACKEND_URL}/user/get/${id}`
   );
-  const response = await res.json(); 
-   
-  return new Promise((resolve,reject) => {
-    if(response.success===true)
-      return  resolve({ data: response.data });
-    
-    return reject( reject({
-      user: null,
-      message: response.message
-    }))
-});
+  const d = await response.json();
+  return new Promise((resolve, reject) => {
+    resolve(d);
+  });
 }

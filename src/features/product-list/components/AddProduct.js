@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import { STATUS } from "../../../app/constants";
-import uploadFile from "../../firebase/uploadFile";
 import { addProductAsync } from "../productSlice";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getCategories } from "../productSlice";
 import { storage } from "../../firebase/setup";
 export default function AddProduct() {
   const {
@@ -21,6 +21,7 @@ export default function AddProduct() {
   const navigate = useNavigate();
   const [img, setImg] = useState(null);
   const [up, setUp] = useState(null);
+  const categories = useSelector((state) => state.products.categories);
 
   const onSubmit = async (data) => {
     const storageRef = ref(storage, `/products/${data.title}`);
@@ -69,6 +70,9 @@ export default function AddProduct() {
       reader.readAsDataURL(file);
     }
   };
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
 
   return (
     <>
@@ -156,12 +160,9 @@ export default function AddProduct() {
                       required: "Product Description is required.",
                     })}
                   >
-                    <option value="acchar">Acchar</option>
-                    <option value="namkeen">Namkeen</option>
-                    <option value="chutteny">Chutteny</option>
-                    <option value="ladoo">Ladoo</option>
-                    <option value="pappad">Pappad</option>
-                    <option value="traditional">Traditional</option>
+                    {categories.map((category) => (
+                      <option value={category.value}>{category.label}</option>
+                    ))}
                   </select>
                 </div>
               </div>

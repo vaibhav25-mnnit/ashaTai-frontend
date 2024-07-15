@@ -1,23 +1,13 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  FunnelIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon, FunnelIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProductList from "./ProductList";
-import {
-  sortProducts,
-  getProducts,
-  getCategories,
-  updateFilter,
-} from "../productSlice";
+import { getProducts, getCategories, updateFilter } from "../productSlice";
 
-import { ITEMS_PER_PAGE } from "../../../app/constants";
+import Pagination from "../../../components/Pagination";
 
 const sortOptions = [
   { name: "Best Rating", id: "rating", order: "desc", current: false },
@@ -28,7 +18,6 @@ const sortOptions = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
 export default function Products() {
   const filters = [
     {
@@ -42,46 +31,43 @@ export default function Products() {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState([]);
 
-  const p = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
   const totalProducts = useSelector((state) => state.products.totalProducts);
 
   //function to handle the sort functionality
-  const sP = (option, order) => {
-    let sortedP = [];
+  const handleSort = (option, order) => {
+    console.log({ option, order });
+    const existingSortIndex = filter.findIndex(
+      (item) => item.section === "_sort"
+    );
+    const existingOrderIndex = filter.findIndex(
+      (item) => item.section === "_order"
+    );
 
-    if (order === "asc") {
-      if (option === "price") {
-        sortedP = p.slice().sort((p1, p2) => {
-          if (p1.price > p2.price) return 1;
+    let updatedFilter = [];
 
-          if (p1.price < p2.price) return -1;
-
-          return 0;
-        });
-      }
+    if (existingSortIndex !== -1) {
+      // _sort already exists, update its value
+      updatedFilter = filter.map((item) =>
+        item.section === "_sort" ? { ...item, value: option } : item
+      );
+    } else {
+      // _sort doesn't exist, add it
+      updatedFilter = [...filter, { section: "_sort", value: option }];
     }
 
-    if (order === "desc") {
-      if (option === "rating") {
-        sortedP = p.slice().sort((p1, p2) => {
-          if (p1.rating < p2.rating) return 1;
-
-          if (p1.rating > p2.rating) return -1;
-
-          return 0;
-        });
-      }
-      if (option === "price") {
-        sortedP = p.slice().sort((p1, p2) => {
-          if (p1.price < p2.price) return 1;
-          if (p1.price > p2.price) return -1;
-          return 0;
-        });
-      }
+    if (existingOrderIndex !== -1) {
+      // _order already exists, update its value
+      updatedFilter = updatedFilter.map((item) =>
+        item.section === "_order" ? { ...item, value: order } : item
+      );
+    } else {
+      // _order doesn't exist, add it
+      updatedFilter = [...updatedFilter, { section: "_order", value: order }];
     }
 
-    dispatch(sortProducts(sortedP));
+    setFilter(updatedFilter);
+    setPage(1);
   };
 
   //function to handle the filter functionality
@@ -211,8 +197,10 @@ export default function Products() {
           </Dialog>
         </Transition.Root>
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white shadow">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+          {/* Heading and sort */}
+
+          <div className=" bg-white shadow-xl flex items-baseline justify-between   px-5  py-5  mt-16  ">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               Browse Products
             </h1>
@@ -248,7 +236,7 @@ export default function Products() {
                                 cursor: "pointer",
                               }}
                               onClick={(e) => {
-                                sP(option.id, option.order);
+                                handleSort(option.id, option.order);
                               }}
                               className={classNames(
                                 option.current
@@ -279,21 +267,20 @@ export default function Products() {
             </div>
           </div>
 
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-              {/* Filters */}
-
-              <form className="hidden lg:block">
-                {filters.map((section) => (
-                  <div
-                    as="div"
-                    key={section.id}
-                    className="border-t border-gray-200 px-4 py-6"
-                  >
+          {/* Filters and products */}
+          <section
+            aria-labelledby="products-heading"
+            className=" pt-6 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4 "
+          >
+            {/* Filters */}
+            <div className="hidden lg:block lg:col-span-1">
+              {filters.map((section) => (
+                <div
+                  key={section.id}
+                  className="sticky top-0 pt-6"
+                  style={{ top: "calc(2rem)" }}
+                >
+                  <div className="border border-gray-200 px-4 py-6 bg-white shadow-xl mb-8">
                     <>
                       <h3 className="-mx-2 -my-3 flow-root">
                         <div className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
@@ -335,21 +322,24 @@ export default function Products() {
                       </div>
                     </>
                   </div>
-                ))}
-              </form>
-              {/* Product grid */}
-              <div className="lg:col-span-3">
-                <ProductList />
-              </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Product grid */}
+            <div className="lg:col-span-3">
+              <ProductList />
             </div>
           </section>
 
           {/* Pagination */}
-          <Pagination
-            totalItems={totalProducts}
-            page={page}
-            setPage={setPage}
-          />
+          <div className="bg-white shadow-2xl   border boremt-5">
+            <Pagination
+              totalItems={totalProducts}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
         </main>
       </div>
     </div>
@@ -357,108 +347,107 @@ export default function Products() {
 }
 
 //pagination component
-function Pagination({ totalItems, page, setPage }) {
-  const total_pages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  return (
-    <>
-      {/* pagination component for mobile screens */}
+// function Pagination({ totalItems, page, setPage }) {
+//   const total_pages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+//   return (
+//     <>
+//       <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+//         {/* pagination component for mobile screens */}
+//         <div className="flex flex-1 justify-between sm:hidden">
+//           <div
+//             onClick={() => {
+//               const newPage = page - 1;
+//               setPage(newPage);
+//             }}
+//             className={`cursor-pointer relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50  ${
+//               page === 1 && "invisible"
+//             } `}
+//           >
+//             Previous
+//           </div>
 
-      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-        <div className="flex flex-1 justify-between sm:hidden">
-          <div
-            onClick={() => {
-              const newPage = page - 1;
-              setPage(newPage);
-            }}
-            className={`cursor-pointer relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50  ${
-              page === 1 && "invisible"
-            } `}
-          >
-            Previous
-          </div>
+//           <div
+//             onClick={() => {
+//               const newPage = page + 1;
+//               setPage(newPage);
+//             }}
+//             className={`cursor-pointer relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50  ${
+//               page === total_pages && "invisible"
+//             }`}
+//           >
+//             Next
+//           </div>
+//         </div>
 
-          <div
-            onClick={() => {
-              const newPage = page + 1;
-              setPage(newPage);
-            }}
-            className={`cursor-pointer relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50  ${
-              page === total_pages && "invisible"
-            }`}
-          >
-            Next
-          </div>
-        </div>
+//         {/* pagination component for desktop screens */}
+//         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+//           <div>
+//             <p className="text-sm text-gray-700 ">
+//               Showing{" "}
+//               <span className="font-medium">
+//                 {(page - 1) * ITEMS_PER_PAGE + 1}
+//               </span>{" "}
+//               to{" "}
+//               <span className="font-medium">
+//                 {Math.min(totalItems, page * ITEMS_PER_PAGE)}
+//               </span>{" "}
+//               of <span className="font-medium">{totalItems}</span> results
+//             </p>
+//           </div>
 
-        {/* pagination component for desktop screens */}
-        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-gray-700 ">
-              Showing{" "}
-              <span className="font-medium">
-                {(page - 1) * ITEMS_PER_PAGE + 1}
-              </span>{" "}
-              to{" "}
-              <span className="font-medium">
-                {Math.min(totalItems, page * ITEMS_PER_PAGE)}
-              </span>{" "}
-              of <span className="font-medium">{totalItems}</span> results
-            </p>
-          </div>
-
-          <div>
-            <nav
-              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-              aria-label="Pagination"
-            >
-              {/* Previous icon  */}
-              {page !== 1 && (
-                <div className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                  <span className="sr-only">Previous</span>
-                  <ChevronLeftIcon
-                    onClick={() => {
-                      const newPage = page - 1;
-                      setPage(newPage);
-                    }}
-                    className="h-5 w-5 cursor-pointer"
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
-              {/* rendring all the pages */}
-              {Array.from({ length: total_pages }).map((el, index) => (
-                <div
-                  key={index}
-                  aria-current="page"
-                  onClick={() => {
-                    setPage(index + 1);
-                  }}
-                  className={`cursor-pointer relative z-10 inline-flex items-center ${
-                    index + 1 === page
-                      ? "bg-indigo-600 text-white"
-                      : "text-gray-400"
-                  } px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                >
-                  {index + 1}
-                </div>
-              ))}
-              {page !== total_pages && (
-                <div className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                  <span className="sr-only">Next</span>
-                  <ChevronRightIcon
-                    onClick={() => {
-                      const newPage = page + 1;
-                      setPage(newPage);
-                    }}
-                    className="cursor-pointer h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
-            </nav>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
+//           <div>
+//             <nav
+//               className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+//               aria-label="Pagination"
+//             >
+//               {/* Previous icon  */}
+//               {page !== 1 && (
+//                 <div className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+//                   <span className="sr-only">Previous</span>
+//                   <ChevronLeftIcon
+//                     onClick={() => {
+//                       const newPage = page - 1;
+//                       setPage(newPage);
+//                     }}
+//                     className="h-5 w-5 cursor-pointer"
+//                     aria-hidden="true"
+//                   />
+//                 </div>
+//               )}
+//               {/* rendring all the pages */}
+//               {Array.from({ length: total_pages }).map((el, index) => (
+//                 <div
+//                   key={index}
+//                   aria-current="page"
+//                   onClick={() => {
+//                     setPage(index + 1);
+//                   }}
+//                   className={`cursor-pointer relative z-10 inline-flex items-center ${
+//                     index + 1 === page
+//                       ? "bg-indigo-600 text-white"
+//                       : "text-gray-400"
+//                   } px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+//                 >
+//                   {index + 1}
+//                 </div>
+//               ))}
+//               {page !== total_pages && (
+//                 <div className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+//                   <span className="sr-only">Next</span>
+//                   <ChevronRightIcon
+//                     onClick={() => {
+//                       const newPage = page + 1;
+//                       setPage(newPage);
+//                     }}
+//                     className="cursor-pointer h-5 w-5"
+//                     aria-hidden="true"
+//                   />
+//                 </div>
+//               )}
+//             </nav>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }

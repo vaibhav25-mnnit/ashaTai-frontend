@@ -208,8 +208,6 @@ export default function NewCheckout() {
 
   return (
     <>
-      {Products.length <= 0 && <Navigate replace={true} to="/" />}
-
       <div className="main p-5">
         {/* <div className='upper-main'> */}
         <div className="w-full grid grid-cols-6 gap-4 md:px-32">

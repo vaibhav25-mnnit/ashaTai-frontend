@@ -1,37 +1,33 @@
 import React, { useEffect } from "react";
-// import './App.css'
 
-//checking if submodule works or not in frontend
-
-import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import { Toaster } from "react-hot-toast";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "./features/cart/cartSlice";
+import { getUser, selectUser } from "./features/auth/authSlice";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
 import CartPage from "./pages/CartPage";
 import NewCheckout from "./pages/NewCheckout";
 import ProductDetailPage from "./features/product-list/components/ProductDetail";
 import NotFound from "./pages/NotFound";
 import Protected from "./features/auth/components/Protected";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "./features/cart/cartSlice";
-import { selectUser } from "./features/auth/authSlice";
 import Navbar from "./features/navbar/Navbar";
-import Orders from "./features/order/components/Orders";
 import Success from "./components/Success";
 import OrdersPage from "./pages/OrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
-import CashFreePayment from "./components/CashFreePayment";
 import Products from "./features/product-list/components/Products";
 import SendResetMail from "./features/resetPassword.js/components/SendResetMail";
 import ResetPassword from "./features/resetPassword.js/components/ResetPassword";
 import AddProductPage from "./pages/AddProductPage";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
+import ProfilePage from "./pages/ProfilePage";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -86,6 +82,11 @@ const router = createBrowserRouter([
     element: <Protected component={<OrdersPage />} />,
   },
   {
+    path: "/profile",
+    element: <ProfilePage />,
+    // element: <Protected component={<Success />} />
+  },
+  {
     path: "/order-success/:id/:status",
     element: <Success />,
     // element: <Protected component={<Success />} />
@@ -108,6 +109,14 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   const logedInUser = useSelector(selectUser);
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+
+    if (userToken) {
+      if (!logedInUser) dispatch(getUser({ id: userToken }));
+    }
+  });
 
   useEffect(() => {
     if (logedInUser) {

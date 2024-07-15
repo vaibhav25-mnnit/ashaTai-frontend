@@ -40,6 +40,7 @@ function Signup() {
       dispatch(resetUser());
     }
   });
+
   useEffect(() => {
     if (status === STATUS.ERROR) {
       toast.error(message);
