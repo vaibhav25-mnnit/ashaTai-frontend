@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetCart, selectCartCount } from "../cart/cartSlice";
 import { resetProducts } from "../product-list/productSlice";
 import Cart from "../cart/components/Cart";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo2.png";
 import "../../components/styles/navbar.css";
 import { resetOrders } from "../order/orderSlice";
 import toast from "react-hot-toast";
@@ -23,7 +23,7 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: "Your Profile", href: "/profile" },
+  { name: "Your Profile", href: "/profile?tar=Your Profile" },
   { name: "Your Orders", href: "/profile?tar=order" },
   { name: "Sign out", href: "#" },
 ];
@@ -131,7 +131,7 @@ export default function Navbar({ ShowNav = false, title, children }) {
                     className="flex justify-center sm:justify-start items-center "
                   >
                     <img
-                      className="h-8 w-1/2 md:w-auto"
+                      className="h-8 w-[200%]"
                       src={logo}
                       alt="Your Company"
                     />

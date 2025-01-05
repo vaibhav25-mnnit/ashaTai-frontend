@@ -12,18 +12,18 @@ function CategoryCard({ data }) {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const handleClick = () => {
-    console.log(data);
-    dispatch(updateFilter({ id: data._id }));
+  // const handleClick = () => {
+  //   console.log(data);
+  //   dispatch(updateFilter({ id: data._id }));
 
-    dispatch(
-      getProducts({
-        filter: { section: "category", value: data.value },
-        page: 1,
-      })
-    );
-    navigate(`/category/${data.value}`);
-  };
+  //   dispatch(
+  //     getProducts({
+  //       filter: { section: "category", value: data.value },
+  //       page: 1,
+  //     })
+  //   );
+  //   navigate(`/category/${data.value}`);
+  // };
 
   return (
     <div data-aos="zoom-in" data-aos-duration="1000">

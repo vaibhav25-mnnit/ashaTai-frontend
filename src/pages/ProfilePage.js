@@ -6,6 +6,7 @@ import Profile from "../components/Profile";
 import Cart from "../features/cart/components/Cart";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/auth/authSlice";
+import Navbar from "../features/navbar/Navbar";
 const navigation = [
   {
     svg: (
@@ -122,95 +123,19 @@ const navigation = [
 function ProfilePage() {
   const [parm, setParam] = useSearchParams();
   const user = useSelector(selectUser);
-
   const target = parm.get("tar");
+
   return (
-    <>
-      <div class="bg-slate-200 flex h-screen">
-        <aside class="fixed z-50 md:relative">
-          {/* <!-- Sidebar --> */}
-          <input type="checkbox" class="peer hidden" id="sidebar-open" />
-          <label
-            class="peer-checked:rounded-full peer-checked:p-2 peer-checked:right-6 peer-checked:bg-gray-600 peer-checked:text-white absolute top-8 z-20 mx-4 cursor-pointer md:hidden"
-            for="sidebar-open"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </label>
-          <nav
-            aria-label="Sidebar Navigation"
-            class="peer-checked:w-64 left-0 z-10 flex h-screen w-0 flex-col overflow-hidden bg-gray-700 text-white transition-all md:h-screen md:w-64 lg:w-72"
-          >
-            <ul class="mt-8 space-y-3 md:mt-20">
-              {navigation.map((nav) => (
-                <li class="relative">
-                  <Link
-                    to={`?tar=${nav.href}`}
-                    class="focus:bg-slate-600 hover:bg-slate-600 flex w-full space-x-2 rounded-md px-10 py-4 text-gray-300 focus:outline-none"
-                  >
-                    <span class="text-2xl">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        role="img"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 36 36"
-                      >
-                        {nav.svg}
-                      </svg>
-                    </span>
-                    <span class="">{nav.label}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
-        {/* <!-- /Sidebar --> */}
-
-        <div class="flex h-full w-full flex-col">
-          {/* <!-- Header --> */}
-          <header class="bg-white px-4 py-4 shadow sm:flex-row md:h-20">
-            <h1 class="text-2xl font-black text-gray-800">Hi {user?.name}!</h1>
-            <p class="mb-6 text-gray-600">
-              Here's an overview of your monthly transactions.
-            </p>
-          </header>
-          {/* <!-- Header --> */}
-
-          {/* <!-- Main --> */}
-          <div className="h-full overflow-hidden">
-            <main id="dashboard-main" className="h-full p-4 lg:pl-10">
-              <ComponentPicker className="h-full " target={target} />
-            </main>
-          </div>
-          {/* <!-- /Main --> */}
-        </div>
-      </div>
-    </>
+    <Navbar
+      title={target}
+      children=<ComponentPicker className="h-full " target={target} />
+    />
   );
 }
 function ComponentPicker({ target }) {
   switch (target) {
     case "order":
       return <Orders />;
-      break;
-    case "address":
-      return <Address />;
       break;
     case "cart":
       return <Cart />;

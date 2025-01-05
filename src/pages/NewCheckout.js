@@ -35,6 +35,7 @@ import {
 } from "../features/cart/cartSlice";
 
 import Loader from "../components/Loader";
+import AddressDetail from "../components/AddressDetail";
 
 export default function NewCheckout() {
   const navigate = useNavigate();
@@ -361,6 +362,9 @@ export default function NewCheckout() {
                               "blur-sm animate-pulse"
                             }`}
                           >
+                            {Products.length === 0 && (
+                              <Navigate to="/shop-all" />
+                            )}
                             {Products.map((p) => (
                               <li key={p.product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -383,7 +387,7 @@ export default function NewCheckout() {
                                       </h3>
                                       <div className="flex  flex-col">
                                         <p className="ml-4">
-                                          $
+                                          ₹
                                           {Math.round(
                                             p.product.price -
                                               p.product.price *
@@ -392,7 +396,7 @@ export default function NewCheckout() {
                                           ) * p.quantity}
                                         </p>
                                         <p className="ml-4 tracking-tight text-gray-900 line-through">
-                                          $
+                                          ₹
                                           {Math.round(
                                             p.quantity * p.product.price
                                           )}
@@ -564,7 +568,7 @@ export default function NewCheckout() {
                   >
                     <div className="inner-price font-medium text-gray-900">
                       <p>Price ({Products.length} items)</p>
-                      <p>${totalPrice}</p>
+                      <p>₹{totalPrice}</p>
                     </div>
 
                     <div className="inner-price font-medium text-gray-900">
@@ -575,7 +579,7 @@ export default function NewCheckout() {
                           fontWeight: "bold",
                         }}
                       >
-                        -${discount}
+                        -₹{discount}
                       </p>
                     </div>
 
@@ -588,7 +592,7 @@ export default function NewCheckout() {
 
                     <div className="final-amount font-medium text-gray-900">
                       <p>Total Amount</p>
-                      <p>${Math.round(totalPrice - discount)}</p>
+                      <p>₹{Math.round(totalPrice - discount)}</p>
                     </div>
 
                     <hr />
@@ -600,7 +604,7 @@ export default function NewCheckout() {
                           fontWeight: "bold",
                         }}
                       >
-                        You will save ${discount} on this order
+                        You will save ₹{discount} on this order
                       </p>
                     </div>
                   </div>
@@ -646,34 +650,7 @@ function AddressList({ addresses, handleSelectAddress, setOpenModal }) {
                 {addresses.length > 0 ? (
                   addresses.map((address, index) => (
                     <>
-                      <div
-                        key={index}
-                        class="flex flex-col mb-3 items-center  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl"
-                      >
-                        <div class="flex flex-col justify-between p-4 leading-normal">
-                          <h5 class="mb-2 text-xl font-bold text-gray-900">
-                            {address?.fullName}
-                          </h5>
-                          <p class=" font-normal ">{address?.streetAddress}</p>
-                          <p class=" font-normal ">{address?.city}</p>
-                          <p class=" font-normal ">
-                            {address?.state} - {address?.pinCode}
-                          </p>
-                          <p class=" font-normal mt-2">
-                            Phone: {address?.phoneNumber}
-                          </p>
-                        </div>
-                        <button
-                          class="text-indigo-700 hover:text-white border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
-                          onClick={async () => {
-                            await handleSelectAddress(address);
-                            await setOpenModal(false);
-                          }}
-                        >
-                          {" "}
-                          Deliver Here
-                        </button>
-                      </div>
+                      <AddressDetail address={address} />
                     </>
                   ))
                 ) : (

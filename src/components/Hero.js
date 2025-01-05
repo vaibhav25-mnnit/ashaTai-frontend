@@ -13,7 +13,7 @@ function Hero() {
           data-aos-duration="1000"
           className="lg:max-w-2xl w-auto lg:pt-20  lg:ml-10"
         >
-          <div className="lg:text-start text-center ">
+          <div className="lg:text-start text-center   ">
             <h1 className="text-4xl dark:text-white font-bold tracking-tight text-gray-900 sm:text-6xl">
               Delight Your Palate with Homemade Authenticity.
             </h1>

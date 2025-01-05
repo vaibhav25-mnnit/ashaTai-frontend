@@ -10,6 +10,7 @@ import {
 import { STATUS } from "../../../app/constants";
 import { toast } from "react-hot-toast";
 import { selectUser } from "../../auth/authSlice";
+import cart from "../../../images/cart.gif";
 
 function Cart({ width = "2/3", flag }) {
   const Products = useSelector(selectCartProducts);
@@ -27,18 +28,28 @@ function Cart({ width = "2/3", flag }) {
     toast.success(`successfully removed ${data.product.title} from cart.`);
   };
 
-  const handleReset = async () => {
-    await dispatch(resetCartAsync(user._id));
-    toast.success(`successfully cleared cart.`);
-  };
+  // const handleReset = async () => {
+  //   await dispatch(resetCartAsync(user._id));
+  //   toast.success(`successfully cleared cart.`);
+  // };
+
   return (
     <>
       {Products.length <= 0 ? (
-        "your cart is empty"
+        <div className="flex flex-col items-center align-center py-8 gap-y-5">
+          <img src={cart} alt="cart gif" className=" h-auto w-auto " />
+          <h2>Cart empty</h2>
+          <Link
+            to="/shop-all"
+            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Fill your
+          </Link>
+        </div>
       ) : (
-        <div className="px-5">
+        <div className="px-5 ">
           <div
-            className={`mt-2  sm:mx-auto w-full max-w-7xl w-full px-4  sm:px-6 lg:px-8 bg-white shadow`}
+            className={`mt-2 sm:mx-auto w-full max-w-7xl w-full px-4  sm:px-6 lg:px-8 bg-white shadow`}
           >
             <div
               className={`mx-auto w-full   bg-white max-w-7xl px-4 sm:px-6 `}
@@ -84,7 +95,7 @@ function Cart({ width = "2/3", flag }) {
                                 <div className="flex  flex-col">
                                   <p className="">
                                     {" "}
-                                    $
+                                    ₹
                                     {Math.round(
                                       p.product.price -
                                         p.product.price *
@@ -92,7 +103,7 @@ function Cart({ width = "2/3", flag }) {
                                     ) * p.quantity}
                                   </p>
                                   <p className="tracking-tight text-gray-900 line-through">
-                                    ${p.quantity * p.product.price}
+                                    ₹{p.quantity * p.product.price}
                                   </p>
                                 </div>
                               </div>
@@ -145,7 +156,7 @@ function Cart({ width = "2/3", flag }) {
                     }`}
                   >
                     <p>Subtotal</p>
-                    <p>${total}</p>
+                    <p>₹{total}</p>
                   </div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <p className="mt-0.5 text-sm text-gray-500">
@@ -189,6 +200,7 @@ function Cart({ width = "2/3", flag }) {
           </div>
         </div>
       )}
+      <hr className="border-gray-200 sm:mx-auto dark:border-gray-700" />
     </>
   );
 }
