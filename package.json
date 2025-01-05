@@ -13,6 +13,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "antd": "^5.19.3",
     "aos": "^3.0.0-beta.6",
     "buffer": "^6.0.3",
     "cashfree-pg-sdk-javascript": "^2.0.7",

@@ -47,7 +47,7 @@ function Orders() {
   }, [dispatch, filter, page, user]);
 
   return (
-    <div className="h-full overflow-y-scroll  overflow-x-hidden lg:overflow-y-hidden">
+    <div className="h-full mt-4 overflow-y-scroll  overflow-x-hidden lg:overflow-y-hidden">
       {/* Mobile filter dialog */}
       <Transition.Root show={mobileFiltersOpen} as={Fragment}>
         <Dialog
@@ -160,23 +160,23 @@ function Orders() {
       </Transition.Root>
 
       <main className="mx-auto max-w-7xl lg:pr-0">
-        {/*TODO:update the position of funnel icon for mobile only filter button */}
-        <div className="lg:hidden fixed t-16 l-16">
-          <div>
-            <button
-              type="button"
-              className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-              onClick={() => setMobileFiltersOpen(true)}
-            >
-              <FunnelIcon className="h-7 w-7" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-
         <section
           aria-labelledby="products-heading"
           className=" flex h-full  justify-start lg:justify-between px-4"
         >
+          {/*TODO:update the position of funnel icon for mobile only filter button */}
+          <div className="lg:hidden fixed b-32 r-16">
+            <div>
+              <button
+                type="button"
+                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                onClick={() => setMobileFiltersOpen(true)}
+              >
+                <FunnelIcon className="h-7 w-7" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
           {/* <div className="grid-cols-1"> */}
           {/* Big screen Filters */}
           <div className="w-1/4 hidden lg:h-[32rem] bg-white shadow lg:block mr-5">
@@ -232,8 +232,10 @@ function Orders() {
           </div>
 
           {/* Orders grid */}
-          <div className="w-full h-full lg:h-[32rem] mb-2 lg:mb-5 lg:pr-3 overflow-y-scroll overflow-x-hidden">
+          <div className="w-full h-full lg:h-[32rem] mb-2 lg:mb-5 lg:pr-3  overflow-x-hidden">
             <ul className="divide-y divide-grey-500  ">
+              {orders?.length <= 0 && <h1>You don't have any orders</h1>}
+
               {orders?.map((order) => (
                 <>
                   <Link to={`/order-details/${order.id}`}>
@@ -268,7 +270,7 @@ function Orders() {
                       <div>
                         <div className="">
                           <p className="text-sm font-semibold leading-6 text-gray-900">
-                            $ {order.priceDetails.toPay}
+                            ₹ {order.priceDetails.toPay}
                           </p>
                         </div>
                       </div>
@@ -295,9 +297,15 @@ function Orders() {
         </section>
 
         {/*  Pagination */}
-        <div className="mx-4">
-          <Pagination totalItems={totalOrders} page={page} setPage={setPage} />
-        </div>
+        {orders?.length > 0 && (
+          <div className="mx-4">
+            <Pagination
+              totalItems={totalOrders}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
+        )}
       </main>
     </div>
   );

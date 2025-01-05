@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSelectedProduct, resetSelectedProducts } from "../productSlice";
@@ -13,9 +12,9 @@ import { selectUser } from "../../auth/authSlice";
 import { STATUS } from "../../../app/constants";
 import { toast } from "react-hot-toast";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function ProductDetail() {
   const dispatch = useDispatch();
@@ -119,7 +118,7 @@ export default function ProductDetail() {
 
                     {/* Price Section */}
                     <p className="text-3xl tracking-tight text-gray-900">
-                      $
+                      ₹
                       {Math.round(
                         selectedProduct.price -
                           selectedProduct.price *
@@ -128,7 +127,7 @@ export default function ProductDetail() {
                     </p>
                     <div className="flex items-center flex space-x-4 ">
                       <p className="text-3xl tracking-tight text-gray-900 line-through">
-                        ${selectedProduct.price}
+                        ₹{selectedProduct.price}
                       </p>
                       <p className="text-3xl tracking-tight text-gray-900">
                         {selectedProduct.discountPercentage}% off
@@ -136,7 +135,7 @@ export default function ProductDetail() {
                     </div>
 
                     {/* Reviews */}
-                    <div className="mt-6">
+                    {/* <div className="mt-6">
                       <h3 className="sr-only">Reviews</h3>
                       <div className="flex items-center">
                         <div className="flex items-center">
@@ -157,7 +156,7 @@ export default function ProductDetail() {
                           {selectedProduct.rating.average} out of 5 stars
                         </p>
                       </div>
-                    </div>
+                    </div> */}
 
                     {inCart ? (
                       <Link to="/cart">
