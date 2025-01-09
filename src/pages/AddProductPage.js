@@ -29,7 +29,7 @@ function EnterAdminPassword({ setIsadmin }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (data.password === "sanchi") {
+    if (data.password === process.env.REACT_APP_ADD_PRODUCT_PASSWORD) {
       toast.success("Welcome Admin");
       setIsadmin(true);
     } else {

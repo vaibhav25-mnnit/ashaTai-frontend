@@ -1,4 +1,5 @@
 # AshaTai Backend
+
 ![ashaTai-backend](https://socialify.git.ci/vaibhav25-mnnit/ashaTai-frontend/image?font=Raleway&language=1&name=1&owner=1&theme=Dark)
 
 This is the frontend code for an e-commerce website [AshaTai](https://asha-tai.vercel.app/). \
@@ -49,6 +50,7 @@ To run the project, you'll need to add the following environment variables to yo
 - `REACT_FIREBASE_STORAGEBUCKET`: The storage bucket for your Firebase project.
 - `REACT_FIREBASE_MESSAGINGSENDERID`: The messaging sender ID for your Firebase project.
 - `REACT_FIREBASE_APPID`: The app ID for your Firebase project.
+- `REACT_APP_ADD_PRODUCT_PASSWORD`: The password for admin to add new password
 
 ## License
 
