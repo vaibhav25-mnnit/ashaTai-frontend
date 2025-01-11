@@ -206,15 +206,14 @@ export default function Navbar({ ShowNav = false, title, children }) {
                     </>
                   ) : (
                     <>
-                      <Test />
-                      {/* <div class="flow-root">
+                      <div class="flow-root">
                         <Link
                           to="/login"
                           className="-m-2 block p-2 font-medium text-white "
                         >
                           Sign in
                         </Link>
-                      </div> */}
+                      </div>
                     </>
                   )}
                 </div>
@@ -430,65 +429,6 @@ export default function Navbar({ ShowNav = false, title, children }) {
           {children && <main>{children}</main>}
         </div>
       }
-    </>
-  );
-}
-
-function Test() {
-  return (
-    <>
-      <Menu as="div" className="mr-4 hidden md:block">
-        <Menu.Button>
-          <div className="text-white flex items-center flex-col">
-            <div>
-              <h2 className="text-sm">Hello, Vaibhav Bagate</h2>
-            </div>
-            <div className="flex items-center">
-              <h2 className="text-sm">Profile & orders </h2>
-            </div>
-          </div>
-        </Menu.Button>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            {userNavigation.map((item) => (
-              <Menu.Item key={item.name}>
-                {({ active }) => (
-                  <Link
-                    // onClick={(e) => handleClick(e, item)}
-                    to={item.href}
-                    className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </Menu.Item>
-            ))}
-          </Menu.Items>
-        </Transition>
-      </Menu>
-      <button
-        type="button"
-        className="relative dark:bg-black rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 z-10"
-        // onClick={() => setState(true)}
-      >
-        <span className="absolute -inset-1.5" />
-        <span className="sr-only">Your Cart</span>
-        <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-      </button>
-      <span className="inline-flex items-center rounded-md mb-5 -ml-3 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 z-20">
-        {5}
-      </span>
     </>
   );
 }
