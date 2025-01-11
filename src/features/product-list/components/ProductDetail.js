@@ -11,6 +11,7 @@ import {
 import { selectUser } from "../../auth/authSlice";
 import { STATUS } from "../../../app/constants";
 import { toast } from "react-hot-toast";
+import Loader from "../../../components/Loader";
 
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(" ");
@@ -213,23 +214,7 @@ export default function ProductDetail() {
           }
         />
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            className="flex h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status"
-          >
-            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span>
-          </div>
-        </div>
+        <Loader />
       )}
     </div>
   );

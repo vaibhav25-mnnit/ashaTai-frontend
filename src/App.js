@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -11,22 +11,23 @@ import { getUser, selectUser } from "./features/auth/authSlice";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
-import NewCheckout from "./pages/NewCheckout";
-import ProductDetailPage from "./features/product-list/components/ProductDetail";
 import NotFound from "./pages/NotFound";
-import Protected from "./features/auth/components/Protected";
-import Navbar from "./features/navbar/Navbar";
 import Success from "./components/Success";
 import OrdersPage from "./pages/OrdersPage";
-import OrderDetailsPage from "./pages/OrderDetailsPage";
-import Products from "./features/product-list/components/Products";
-import SendResetMail from "./features/resetPassword.js/components/SendResetMail";
-import ResetPassword from "./features/resetPassword.js/components/ResetPassword";
-import AddProductPage from "./pages/AddProductPage";
-import HomePage from "./pages/HomePage";
-import CategoryPage from "./pages/CategoryPage";
+import ShopAllPage from "./pages/ShopAllPage";
 import ProfilePage from "./pages/ProfilePage";
+import CategoryPage from "./pages/CategoryPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import AddProductPage from "./pages/AddProductPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+import Protected from "./features/auth/components/Protected";
+import { selectTheme } from "./features/themeManager/themeSlice";
+import SendResetMail from "./features/resetPassword.js/components/SendResetMail";
+import ProductDetailPage from "./features/product-list/components/ProductDetail";
+import ResetPassword from "./features/resetPassword.js/components/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/shop-all",
-    element: <Navbar children={<Products />} />,
+    element: <ShopAllPage />,
   },
   {
     path: "/category/:category",
@@ -63,18 +64,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/checkout",
-    element: (
-      <Protected
-        component={
-          <Navbar ShowNav={true} title="Checkout" children={<NewCheckout />} />
-        }
-      />
-    ),
-    // element: <Protected component={<NewCheckout />}/>
+    element: <Protected component={<CheckoutPage />} />,
   },
   {
     path: "/product-detail/:id",
-    // element: <Protected component={<ProductDetailPage />} />
     element: <ProductDetailPage />,
   },
   {
@@ -83,18 +76,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <ProfilePage />,
-    // element: <Protected component={<Success />} />
+    element: <Protected component={<ProfilePage />} />,
   },
   {
     path: "/order-success/:id/:status",
-    element: <Success />,
-    // element: <Protected component={<Success />} />
+    element: <Protected component={<Success />} />,
   },
   {
     path: "/order-details/:id",
-    // element: <Protected component={<OrderDetailsPage />} />
-    element: <OrderDetailsPage />,
+    element: <Protected component={<OrderDetailsPage />} />,
   },
   {
     path: "/add-product",
@@ -109,6 +99,7 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   const logedInUser = useSelector(selectUser);
+  const theme = useSelector(selectTheme);
 
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
@@ -117,6 +108,14 @@ function App() {
       if (!logedInUser) dispatch(getUser({ id: userToken }));
     }
   });
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   useEffect(() => {
     if (logedInUser) {
@@ -129,7 +128,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="dark:bg-gray-800  dark:text-white">
       <RouterProvider router={router} />
       <Toaster position="top-center" />
     </div>

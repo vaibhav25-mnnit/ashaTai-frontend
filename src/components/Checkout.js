@@ -1,11 +1,11 @@
-import "../components/styles/newCheckout.css";
+import "../components/styles/checkout.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toast } from "react-hot-toast";
 import { cashfreeSandbox } from "cashfree-pg-sdk-javascript";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import AddressInputFrom from "../components/AddressInputFrom";
+import AddressInputFrom from "./AddressInputFrom";
 
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button, Modal } from "flowbite-react";
@@ -34,10 +34,10 @@ import {
   deleteItem,
 } from "../features/cart/cartSlice";
 
-import Loader from "../components/Loader";
-import AddressDetail from "../components/AddressDetail";
+import Loader from "./Loader";
+import AddressDetail from "./AddressDetail";
 
-export default function NewCheckout() {
+export default function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -16,7 +16,7 @@ const initialState = {
 export const addProductAsync = createAsyncThunk(
   "products/addProductAsync",
   async (data) => {
-    console.log(data);
+    // console.log(data);
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/product/add`,
       {

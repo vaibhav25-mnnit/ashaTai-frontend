@@ -20,7 +20,7 @@ function ProductCard({ product = dummyProduct }) {
     <div>
       <Link
         to={`/product-detail/${product.id}`}
-        className="light-shadow 
+        className="               light-shadow 
                                     h-full  w-auto 
                                     flex flex-col gap-3 items-center justify-center 
                                     overflow-visible 
@@ -29,11 +29,9 @@ function ProductCard({ product = dummyProduct }) {
                                     py-4  
                                     transition-transform duration-500 ease-in-out
                                     hover:scale-105
-                                    dark:bg-gray-800
-                                    dark:border
-                                    dark:rounded-2xl
-                                    dark:shadow-gray-500
-                                    dark:shadow-lg"
+                                    dark:bg-zinc-900 
+                                    dark:border-zinc-700
+                                    "
       >
         <div className="category-container">
           <img src={product.thumbnail} alt={product.title} className="" />
@@ -41,10 +39,12 @@ function ProductCard({ product = dummyProduct }) {
         <h1 className="font-semibold uppercase ">{product.title}</h1>
 
         <div className="flex justify-between items-center w-full px-5">
-          <h3 className="text-sm font-medium  text-gray-900">
+          <h3 className="text-sm font-medium text-gray-900 dark:text-white">
             ₹{product.price}
           </h3>
-          <h3 className="mt-1 text-sm text-gray-500">{product.rating}⭐</h3>
+          <h3 className="mt-1 text-sm text-gray-500 dark:text-white">
+            {product.rating}⭐
+          </h3>
         </div>
       </Link>
     </div>

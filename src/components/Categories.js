@@ -17,7 +17,7 @@ function Categories() {
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-900 dark:text-white flex flex-col py-5   items-center shadow-white ">
+      <div className="bg-white dark:bg-zinc-950 dark:text-white flex flex-col py-5   items-center shadow-white ">
         <h1 className="text-2xl uppercase font-semibold tracking-tight my-4  sm:my-10 sm:text-4xl">
           SHOP BY CATEGORIES
         </h1>

@@ -5,7 +5,7 @@ function Pagination({ totalItems, page, setPage }) {
   const total_pages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   return (
     <>
-      <div className="flex items-center justify-between rounded bg-white px-4 py-3 sm:px-6">
+      <div className="flex items-center justify-between rounded bg-white px-4 py-3 sm:px-6 dark:text-white dark:bg-gray-900">
         {/* pagination component for mobile screens */}
         <div className="flex flex-1 justify-between sm:hidden">
           <div
@@ -15,7 +15,7 @@ function Pagination({ totalItems, page, setPage }) {
             }}
             className={`cursor-pointer relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50  ${
               page === 1 && "invisible"
-            } `}
+            } dark:text-white dark:bg-gray-900`}
           >
             Previous
           </div>
@@ -34,9 +34,9 @@ function Pagination({ totalItems, page, setPage }) {
         </div>
 
         {/* pagination component for desktop screens */}
-        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between dark:text-white dark:bg-gray-900">
           <div>
-            <p className="text-sm text-gray-700 ">
+            <p className="text-sm text-gray-700 dark:text-white dark:bg-gray-900">
               Showing{" "}
               <span className="font-medium">
                 {(page - 1) * ITEMS_PER_PAGE + 1}
