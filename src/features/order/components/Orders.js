@@ -162,10 +162,10 @@ function Orders() {
       <main className="mx-auto max-w-7xl lg:pr-0">
         <section
           aria-labelledby="products-heading"
-          className=" flex h-full  justify-start lg:justify-between px-4"
+          className=" flex h-full  relative justify-start lg:justify-between px-4"
         >
           {/*TODO:update the position of funnel icon for mobile only filter button */}
-          <div className="lg:hidden fixed b-32 r-16">
+          <div className="lg:hidden fixed bottom-20 right-16">
             <div>
               <button
                 type="button"

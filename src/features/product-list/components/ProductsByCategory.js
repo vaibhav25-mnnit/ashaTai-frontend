@@ -1,18 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../../../components/ProductCard";
-import { useSelector } from "react-redux";
-export default function ProductsByCategory() {
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../productSlice";
+import Pagination from "../../../components/Pagination";
+export default function ProductsByCategory({ category }) {
+  const dispatch = useDispatch();
+
   const products = useSelector((state) => state.products.products);
+  console.log(products);
+  const [page, setPage] = useState(1);
+  const totalProducts = useSelector((state) => state.products.totalProducts);
+
+  useEffect(() => {
+    dispatch(
+      getProducts({
+        filter: [{ section: "category", value: category }],
+        page: page,
+      })
+    );
+  }, [page]);
 
   return (
     <>
-      <div className="flex justify-center items-start border border-rose-200 p-5 mt-5 bg-white shadow min-h-screen">
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products.map((product) => (
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+        <div className=" bg-white shadow-xl flex items-baseline justify-between  px-5  py-5  mt-16  ">
+          <h1 className="text-4xl font-semi-bold tracking-tight text-gray-900">
+            Explore Our collection of{" "}
+            <span className="font-bold 	text-transform: uppercase">
+              {category}'s
+            </span>
+          </h1>
+        </div>
+
+        <div className="p-5 mt-2 bg-white shadow grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          {products?.map((product) => (
             <ProductCard product={product} />
           ))}
         </div>
-      </div>
+
+        <div className="bg-white shadow-2xl border boremt-5">
+          <Pagination
+            totalItems={totalProducts}
+            page={page}
+            setPage={setPage}
+          />
+        </div>
+      </main>
     </>
   );
 }

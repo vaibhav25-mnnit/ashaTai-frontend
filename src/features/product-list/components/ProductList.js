@@ -22,9 +22,9 @@ export default function ProductList() {
   }
 
   return (
-    <div className=" bg-white shadow-2xl pb-5">
-      <div className="mx-auto max-w-2xl w-full   sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="mt-6 grid w-full grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
+    <div className=" bg-white shadow-2xl pb-5 dark:text-white dark:bg-gray-900">
+      <div className="mx-auto max-w-2xl w-full sm:px-6 lg:max-w-7xl lg:px-8 dark:text-white dark:bg-gray-900">
+        <div className="mt-6 grid w-full grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {products.map((product) => (
             <ProductCard product={product} />
           ))}

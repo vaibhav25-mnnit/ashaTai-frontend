@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
@@ -22,8 +22,12 @@ export default function AddProduct() {
   const [img, setImg] = useState(null);
   const [up, setUp] = useState(null);
   const categories = useSelector((state) => state.products.categories);
+  const [tags, setTags] = useState([]);
 
   const onSubmit = async (data) => {
+    data.tags = tags;
+    console.log(data);
+
     const storageRef = ref(storage, `/products/${data.title}`);
     const uploadTask = uploadBytesResumable(storageRef, data.thumbnail[0]);
     uploadTask.on(
@@ -69,6 +73,17 @@ export default function AddProduct() {
       };
       reader.readAsDataURL(file);
     }
+  };
+  const handleAddTag = () => {
+    const newTag = document.getElementById("tag").value;
+    if (newTag && !tags.includes(newTag)) {
+      setTags([...tags, newTag]);
+      document.getElementById("tag").value = "";
+    }
+  };
+
+  const handleRemoveTag = (index) => {
+    setTags(tags.filter((_, i) => i !== index));
   };
   useEffect(() => {
     dispatch(getCategories());
@@ -270,8 +285,46 @@ export default function AddProduct() {
                   </span>
                 )}
               </div>
+              {/* tags */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="tag"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Add tag
+                </label>
+                <div className="mt-2 flex">
+                  <input
+                    id="tag"
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  <button
+                    type="button"
+                    className="ml-2 px-4 py-2 bg-indigo-600 text-white rounded-md"
+                    onClick={handleAddTag}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+
+              {/* Display current tags */}
+              <div className="mt-4">
+                {tags.map((tag, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="text-gray-900 dark:text-white">{tag}</span>
+                    <button
+                      type="button"
+                      className="ml-2 px-2 py-1 bg-red-600 text-white rounded-md"
+                      onClick={() => handleRemoveTag(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-            {/* tags */}
 
             {/* thumbnail */}
             <div className="col-span-full">

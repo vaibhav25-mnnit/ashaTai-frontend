@@ -327,13 +327,13 @@ export default function Products() {
             </div>
 
             {/* Product grid */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 dark:text-white dark:bg-gray-900">
               <ProductList />
             </div>
           </section>
 
           {/* Pagination */}
-          <div className="bg-white shadow-2xl   border boremt-5">
+          <div className="bg-white shadow-2xl   border boremt-5 dark:text-white dark:bg-gray-900">
             <Pagination
               totalItems={totalProducts}
               page={page}

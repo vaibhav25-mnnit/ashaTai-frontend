@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../features/navbar/Navbar";
-import Home from "./Home";
+import Home from "../components/Home";
 
 function HomePage() {
   return <Navbar children={<Home />} />;

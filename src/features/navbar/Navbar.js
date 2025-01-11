@@ -4,7 +4,9 @@ import {
   Bars3Icon,
   XMarkIcon,
   ShoppingCartIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+
 import { Link, useNavigate } from "react-router-dom";
 import { resetUser, selectUser } from "../auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,11 +17,12 @@ import logo from "../../images/logo2.png";
 import "../../components/styles/navbar.css";
 import { resetOrders } from "../order/orderSlice";
 import toast from "react-hot-toast";
+import { set } from "react-hook-form";
+import { selectTheme, toggleTheme } from "../themeManager/themeSlice";
 
 const navigation = [
-  { name: "Shop All", href: "/shop-all" },
-  { name: "About Us", href: "#about" },
-  { name: "Contact Us", href: "#contact" },
+  { name: "Your Profile", href: "/profile?tar=Your Profile" },
+  { name: "Your Orders", href: "/profile?tar=order" },
 ];
 
 const userNavigation = [
@@ -46,15 +49,18 @@ export default function Navbar({ ShowNav = false, title, children }) {
   const [state, setState] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const signOut = () => {
+    localStorage.clear("userToken");
+    dispatch(resetProducts());
+    dispatch(resetCart());
+    dispatch(resetUser());
+    dispatch(resetOrders());
+    navigate("/");
+    toast.success("logged out sccessfully.");
+  };
   const handleClick = (e, item) => {
     if (item.name === "Sign out") {
-      localStorage.clear("userToken");
-      dispatch(resetProducts());
-      dispatch(resetCart());
-      dispatch(resetUser());
-      dispatch(resetOrders());
-      navigate("/");
-      toast.success("logged out sccessfully.");
+      signOut();
     }
   };
 
@@ -77,29 +83,13 @@ export default function Navbar({ ShowNav = false, title, children }) {
     };
   }, [prevScrollPos]);
 
+  // TODO: handle theme selection in later update
   // Setting theme
-  const [theme, setTheme] = useState("light");
+  // const theme = useSelector(selectTheme);
 
-  // useEffect(() => {
-  //     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  //         setTheme('dark');
-  //     }
-  //     else {
-  //         setTheme('light');
-  //     }
-  // }, [])
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  // const handleThemeSwitch = () => {
+  //   dispatch(toggleTheme());
+  // };
 
   return (
     <>
@@ -113,31 +103,25 @@ export default function Navbar({ ShowNav = false, title, children }) {
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 {/* Burger button to open the mobile navigation */}
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden sm:">
-                  {/* Mobile menu button*/}
-                  <div
-                    className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white "
-                    onClick={() => setOpen(true)}
-                  >
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Open main menu</span>
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  </div>
+                {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden sm:"> */}
+                {/* Mobile menu button */}
+                <div
+                  className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white sm:hidden"
+                  onClick={() => setOpen(true)}
+                >
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                 </div>
+                {/* </div> */}
+
                 {/* logo in center */}
-                <div className="flex flex-1 items-center justify-evenly  sm:items-stretch sm:justify-start  ">
-                  <Link
-                    to="/"
-                    className="flex justify-center sm:justify-start items-center "
-                  >
-                    <img
-                      className="h-8 w-[200%]"
-                      src={logo}
-                      alt="Your Company"
-                    />
+                <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                  <Link to="/" className="">
+                    <img className="h-12" src={logo} alt="Your Company" />
                   </Link>
 
-                  <div className="hidden sm:ml-6 sm:block">
+                  {/* <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
                         <Link
@@ -155,42 +139,25 @@ export default function Navbar({ ShowNav = false, title, children }) {
                         </Link>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* extreme right for cart,user profile */}
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2  ml-0 sm:static sm:inset-auto  sm:pr-0 sm:mr-16">
-                  {currentuser && (
+                <div className="absolute inset-y-0 right-0 flex pr-2  ml-0 sm:static sm:inset-auto  sm:pr-0 sm:mr-16">
+                  {currentuser ? (
                     <>
-                      <button
-                        type="button"
-                        className="relative dark:bg-black rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 z-10"
-                        onClick={() => setState(true)}
-                      >
-                        <span className="absolute -inset-1.5" />
-                        <span className="sr-only">Your Cart</span>
-                        <ShoppingCartIcon
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <span className="inline-flex items-center rounded-md mb-5 -ml-3 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 z-20">
-                        {cartCount}
-                      </span>
-
                       {/* Profile dropdown */}
-                      <Menu as="div" className="relative ml-3">
-                        <div>
-                          <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span className="absolute -inset-1.5" />
-                            <span className="sr-only">Open user menu</span>
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
-                            />
-                          </Menu.Button>
-                        </div>
+                      <Menu as="div" className="mr-4 hidden sm:block">
+                        <Menu.Button>
+                          <div className="text-white flex items-center flex-col">
+                            <div>
+                              <h2 className="text-sm">Hello, {user.name}</h2>
+                            </div>
+                            <div className="flex items-center">
+                              <h2 className="text-sm">Profile & orders </h2>
+                            </div>
+                          </div>
+                        </Menu.Button>
                         <Transition
                           as={Fragment}
                           enter="transition ease-out duration-100"
@@ -220,45 +187,49 @@ export default function Navbar({ ShowNav = false, title, children }) {
                           </Menu.Items>
                         </Transition>
                       </Menu>
+
+                      <button
+                        type="button"
+                        className="relative dark:bg-black rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 z-10"
+                        onClick={() => setState(true)}
+                      >
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Your Cart</span>
+                        <ShoppingCartIcon
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <span className="inline-flex items-center rounded-lg mb-9 sm:mb-5 -ml-3 bg-gray-50 px-2 py-0  text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 z-20">
+                        {cartCount}
+                      </span>
                     </>
-                  )}
-
-                  <p className="text-white ml-5 hidden lg:block">
-                    Hello, {user.name}
-                  </p>
-
-                  {!currentuser && (
+                  ) : (
                     <>
-                      : (
-                      <>
-                        <div class="flow-root">
-                          <Link
-                            to="/login"
-                            class="-m-2 block p-2 font-medium text-white "
-                          >
-                            Sign in
-                          </Link>
-                        </div>
-                      </>
-                      )
+                      <div class="flow-root">
+                        <Link
+                          to="/login"
+                          className="-m-2 block p-2 font-medium text-white "
+                        >
+                          Sign in
+                        </Link>
+                      </div>
                     </>
                   )}
                 </div>
               </div>
             </div>
 
+            {/* TODO: handle theme selection in later update */}
             {/* theme changer for large screens */}
-            <label
-              className="switch absolute right-[1rem]  bottom-[1.2rem] xl:right-160 hidden sm:block
-                        "
-            >
+            {/* <label className="switch absolute right-[1rem]  bottom-[1.2rem] xl:right-160 hidden sm:block">
               <input
                 type="checkbox"
                 checked={theme === "dark" ? false : true}
                 onChange={handleThemeSwitch}
               />
               <span className="slider "></span>
-            </label>
+            </label> */}
           </nav>
 
           <>
@@ -377,23 +348,30 @@ export default function Navbar({ ShowNav = false, title, children }) {
                           <div className="flex h-full flex-col overflow-y-scroll bg-gray-800  py-6 shadow-xl">
                             <div className="px-4 sm:px-6 ">
                               <Dialog.Title className="text-base font-semibold leading-6 text-white-900">
-                                <div className="flex justify-between items-center px-4">
+                                <div>
+                                  <h2 className="text-lg text-white">
+                                    Hello, Vaibhav Bagate
+                                  </h2>
+                                </div>
+                                {/* <div className="flex justify-between items-center px-4">
                                   <img
                                     className="h-8 w-1/2 md:w-auto"
                                     src={logo}
                                     alt="Your Company"
-                                  />
-                                  <label className="switch ">
+                                  /> */}
+
+                                {/* <label className="switch ">
                                     <input
                                       type="checkbox"
                                       checked={theme === "dark" ? false : true}
                                       onChange={handleThemeSwitch}
                                     />
                                     <span className="slider "></span>
-                                  </label>
-                                </div>
+                                  </label> */}
+                                {/* </div> */}
                               </Dialog.Title>
                             </div>
+
                             <div className="relative mt-6 flex-1 px-4 bg-gray-800  sm:px-6">
                               <div className="sm:hidden">
                                 <div className="space-y-1  px-2 pb-3 pt-2 ">
@@ -401,13 +379,26 @@ export default function Navbar({ ShowNav = false, title, children }) {
                                     <Link
                                       key={item.name}
                                       to={item.href}
-                                      className="text-gray-300 hover:bg-gray-700 hover:text-white
-                                                        hover:cursor-pointer
-                                                    block rounded-md px-3 py-2 text-base font-medium"
+                                      onClick={() => setOpen(false)}
+                                      className="
+                                                text-gray-300 
+                                                hover:bg-gray-700 hover:text-white
+                                                hover:cursor-pointer
+                                                block rounded-md px-3 py-2 text-base font-medium"
                                     >
                                       {item.name}
                                     </Link>
                                   ))}
+                                  <div
+                                    className="
+                                                text-gray-300 
+                                                hover:bg-gray-700 hover:text-white
+                                                hover:cursor-pointer
+                                                block rounded-md px-3 py-2 text-base font-medium"
+                                    onClick={() => signOut()}
+                                  >
+                                    Sign Out
+                                  </div>
                                 </div>
                               </div>
                             </div>

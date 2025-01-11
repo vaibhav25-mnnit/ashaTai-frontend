@@ -5,8 +5,14 @@ import { selectUser } from "../authSlice";
 
 function Protected({ component }) {
   const currentuser = useSelector(selectUser);
-  console.log(currentuser);
-  if (currentuser === null) return <h1>Please,log in</h1>;
+
+  if (currentuser === null) {
+    return (
+      <>
+        <h1>Unauthorized route access.Please login to access this page</h1>
+      </>
+    );
+  }
   return component;
 }
 

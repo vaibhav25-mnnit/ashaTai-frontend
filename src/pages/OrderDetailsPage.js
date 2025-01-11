@@ -9,6 +9,7 @@ import {
   resetCurrentOrder,
   selectCurrentOreder,
 } from "../features/order/orderSlice";
+import Loader from "../components/Loader";
 
 function OrderDetailsPage() {
   const data = useParams();
@@ -24,29 +25,7 @@ function OrderDetailsPage() {
   }, [data.id]);
 
   return (
-    <Navbar
-      children={
-        order ? (
-          <OrderDetails order={order} />
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              className="flex h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status"
-            >
-              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                Loading...
-              </span>
-            </div>
-          </div>
-        )
-      }
-    />
+    <Navbar children={order ? <OrderDetails order={order} /> : <Loader />} />
   );
 }
 

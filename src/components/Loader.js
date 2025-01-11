@@ -1,9 +1,12 @@
-import React from 'react'
-import './styles/loader.css'
+import React from "react";
+import "./styles/loader.css";
 
 export default function Loader() {
-    return (
+  return (
+    <>
+      <div className="flex justify-center min-h-screen items-center">
         <div class="custom-loader"></div>
-    )
+      </div>
+    </>
+  );
 }
-

@@ -5,7 +5,7 @@ import Navbar from "../features/navbar/Navbar";
 export default function OrdersPage() {
   return (
     <>
-      <Navbar ShowNav={false} title="Your Orders" children={<Orders />} />;
+      <Navbar title="Your Orders" children={<Orders />} />;
     </>
   );
 }
