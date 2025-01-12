@@ -125,10 +125,11 @@ export default function ProductDetail() {
                           selectedProduct.price *
                             (selectedProduct.discountPercentage / 100)
                       )}
+                      /kg
                     </p>
                     <div className="flex items-center flex space-x-4 ">
                       <p className="text-3xl tracking-tight text-gray-900 line-through">
-                        ₹{selectedProduct.price}
+                        ₹{selectedProduct.price}/kg
                       </p>
                       <p className="text-3xl tracking-tight text-gray-900">
                         {selectedProduct.discountPercentage}% off

@@ -40,7 +40,7 @@ function ProductCard({ product = dummyProduct }) {
 
         <div className="flex justify-between items-center w-full px-5">
           <h3 className="text-sm font-medium text-gray-900 dark:text-white">
-            ₹{product.price}
+            ₹{product.price}/kg
           </h3>
           <h3 className="mt-1 text-sm text-gray-500 dark:text-white">
             {product.rating}⭐

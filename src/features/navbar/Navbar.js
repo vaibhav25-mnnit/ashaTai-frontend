@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetCart, selectCartCount } from "../cart/cartSlice";
 import { resetProducts } from "../product-list/productSlice";
 import Cart from "../cart/components/Cart";
-import logo from "../../images/logo2.png";
+import logo from "../../images/logo.png";
 import "../../components/styles/navbar.css";
 import { resetOrders } from "../order/orderSlice";
 import toast from "react-hot-toast";

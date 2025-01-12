@@ -29,7 +29,7 @@ function Login() {
   const status = useSelector(selectAuthStatus);
 
   useEffect(() => {
-    if (user === null && status === STATUS.ERROR) { 
+    if (user === null && status === STATUS.ERROR) {
       dispatch(resetUser());
     }
   });
@@ -51,8 +51,8 @@ function Login() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Link to="/">
             <img
-              className="mx-auto h-20 w-20"
-              src={require("../../../images/download.webp")}
+              className="mx-auto h-24"
+              src={require("../../../images/logo2.png")}
               alt="Your Company"
             />
           </Link>

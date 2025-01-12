@@ -101,9 +101,11 @@ function Cart({ width = "2/3", flag }) {
                                         p.product.price *
                                           (p.product.discountPercentage / 100)
                                     ) * p.quantity}
+                                    ({p.quantity}kgs)
                                   </p>
                                   <p className="tracking-tight text-gray-900 line-through">
-                                    ₹{p.quantity * p.product.price}
+                                    ₹{p.quantity * p.product.price}({p.quantity}
+                                    kgs)
                                   </p>
                                 </div>
                               </div>

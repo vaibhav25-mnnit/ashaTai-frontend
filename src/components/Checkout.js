@@ -128,7 +128,7 @@ export default function Checkout() {
       address: user.selectedAddress,
     };
 
-    console.log(order);
+    // console.log(order);
     if (order.address === null || order.address === undefined) {
       toast.error("Please select the delivery address.");
       return;
@@ -394,12 +394,14 @@ export default function Checkout() {
                                                 (p.product.discountPercentage /
                                                   100)
                                           ) * p.quantity}
+                                          ({p.quantity}kgs)
                                         </p>
                                         <p className="ml-4 tracking-tight text-gray-900 line-through">
                                           ₹
                                           {Math.round(
                                             p.quantity * p.product.price
                                           )}
+                                          ({p.quantity}kgs)
                                         </p>
                                       </div>
                                     </div>
