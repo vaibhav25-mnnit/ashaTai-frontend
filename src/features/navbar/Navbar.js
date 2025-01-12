@@ -4,7 +4,6 @@ import {
   Bars3Icon,
   XMarkIcon,
   ShoppingCartIcon,
-  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -103,18 +102,18 @@ export default function Navbar({ ShowNav = false, title, children }) {
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 {/* Burger button to open the mobile navigation */}
-                {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden sm:"> */}
                 {/* Mobile menu button */}
-                <div
-                  className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white sm:hidden"
-                  onClick={() => setOpen(true)}
-                >
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                </div>
-                {/* </div> */}
 
+                {currentuser && (
+                  <div
+                    className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white sm:hidden"
+                    onClick={() => setOpen(true)}
+                  >
+                    <span className="absolute -inset-0.5" />
+                    <span className="sr-only">Open main menu</span>
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  </div>
+                )}
                 {/* logo in center */}
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <Link to="/" className="">
@@ -143,7 +142,7 @@ export default function Navbar({ ShowNav = false, title, children }) {
                 </div>
 
                 {/* extreme right for cart,user profile */}
-                <div className="absolute inset-y-0 right-0 flex pr-2  ml-0 sm:static sm:inset-auto  sm:pr-0 sm:mr-16">
+                <div className="absolute inset-y-0 right-0 flex pr-2  items-center ml-0 sm:static sm:inset-auto ">
                   {currentuser ? (
                     <>
                       {/* Profile dropdown */}
@@ -200,7 +199,7 @@ export default function Navbar({ ShowNav = false, title, children }) {
                           aria-hidden="true"
                         />
                       </button>
-                      <span className="inline-flex items-center rounded-lg mb-9 sm:mb-5 -ml-3 bg-gray-50 px-2 py-0  text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 z-20">
+                      <span className="inline-flex items-center rounded-md mb-5 -ml-4 bg-gray-50 px-2 py-0 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 z-20">
                         {cartCount}
                       </span>
                     </>
@@ -211,7 +210,7 @@ export default function Navbar({ ShowNav = false, title, children }) {
                           to="/login"
                           className="-m-2 block p-2 font-medium text-white "
                         >
-                          Sign in
+                          Sign In
                         </Link>
                       </div>
                     </>
