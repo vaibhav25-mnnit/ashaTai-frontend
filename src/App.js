@@ -28,6 +28,8 @@ import { selectTheme } from "./features/themeManager/themeSlice";
 import SendResetMail from "./features/resetPassword.js/components/SendResetMail";
 import ProductDetailPage from "./features/product-list/components/ProductDetail";
 import ResetPassword from "./features/resetPassword.js/components/ResetPassword";
+import { STATUS } from "./app/constants";
+import HomePageLoader from "./components/HomePageLoader";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +102,7 @@ function App() {
   const dispatch = useDispatch();
   const logedInUser = useSelector(selectUser);
   const theme = useSelector(selectTheme);
+  const [status, setState] = useState(STATUS.IDEAL);
 
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
@@ -124,14 +127,45 @@ function App() {
   }, [dispatch, logedInUser]);
 
   useEffect(() => {
+    setState(STATUS.LOADING);
+    serverCheck();
+  }, []);
+
+  async function serverCheck() {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`);
+    console.log(response.status);
+
+    if (response.status === 200) {
+      setState(STATUS.IDEAL);
+    } else {
+      setState(STATUS.ERROR);
+    }
+  }
+
+  useEffect(() => {
+    if (status === STATUS.ERROR) {
+      console.log("server is down");
+      alert("server is down");
+    }
+  }, [status]);
+
+  useEffect(() => {
     AOS.init();
   }, []);
 
   return (
-    <div className="dark:bg-gray-800  dark:text-white">
-      <RouterProvider router={router} />
-      <Toaster position="top-center" />
-    </div>
+    <>
+      {status === STATUS.LOADING ? (
+        <HomePageLoader />
+      ) : (
+        <>
+          <div className="dark:bg-gray-800  dark:text-white">
+            <RouterProvider router={router} />
+            <Toaster position="bottom-right" />
+          </div>
+        </>
+      )}
+    </>
   );
 }
 
