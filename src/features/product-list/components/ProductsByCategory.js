@@ -3,6 +3,8 @@ import ProductCard from "../../../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../productSlice";
 import Pagination from "../../../components/Pagination";
+import { STATUS } from "../../../app/constants";
+import Loader from "../../../components/Loader";
 export default function ProductsByCategory({ category }) {
   const dispatch = useDispatch();
 
@@ -10,6 +12,7 @@ export default function ProductsByCategory({ category }) {
   console.log(products);
   const [page, setPage] = useState(1);
   const totalProducts = useSelector((state) => state.products.totalProducts);
+  const status = useSelector((state) => state.products.status);
 
   useEffect(() => {
     dispatch(
@@ -32,11 +35,15 @@ export default function ProductsByCategory({ category }) {
           </h1>
         </div>
 
-        <div className="p-5 mt-2 bg-white shadow grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products?.map((product) => (
-            <ProductCard product={product} />
-          ))}
-        </div>
+        {status === STATUS.LOADING ? (
+          <Loader />
+        ) : (
+          <div className="p-5 mt-2 bg-white shadow grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            {products?.map((product) => (
+              <ProductCard product={product} />
+            ))}
+          </div>
+        )}
 
         <div className="bg-white shadow-2xl border boremt-5">
           <Pagination

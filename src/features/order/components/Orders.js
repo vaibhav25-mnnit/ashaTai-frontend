@@ -12,9 +12,12 @@ import {
   updateOrderFilter,
   selectTotalOrders,
   selectOrdersFilter,
+  selectOrderStatus,
 } from "../orderSlice";
 import { selectUser } from "../../auth/authSlice";
 import Pagination from "../../../components/Pagination";
+import { STATUS } from "../../../app/constants";
+import Loader from "../../../components/Loader";
 
 function Orders() {
   const dispatch = useDispatch();
@@ -27,6 +30,7 @@ function Orders() {
   const orders = useSelector(selectOrders);
   const totalOrders = useSelector(selectTotalOrders);
   const filters = useSelector(selectOrdersFilter);
+  const status = useSelector(selectOrderStatus);
   const handleFilterChange = (e, section, option) => {
     //if the checkbox is checked then add into filter array
     let updatedFilter = [];
@@ -233,66 +237,70 @@ function Orders() {
 
           {/* Orders grid */}
           <div className="w-full h-full lg:h-[32rem] mb-2 lg:mb-5 lg:pr-3  overflow-x-hidden">
-            <ul className="divide-y divide-grey-500  ">
-              {orders?.length <= 0 && <h1>You don't have any orders</h1>}
+            {status === STATUS.LOADING ? (
+              <Loader />
+            ) : (
+              <ul className="divide-y divide-grey-500  ">
+                {orders?.length <= 0 && <h1>You don't have any orders</h1>}
 
-              {orders?.map((order) => (
-                <>
-                  <Link to={`/order-details/${order.id}`}>
-                    <li
-                      key={order.id}
-                      className="flex justify-between rounded-2xl items-center mb-2 p-3 bg-white shadow border border-[#dbdbdb] hover:shadow-lg hover:pointer-cursor "
-                    >
-                      {/* Show first item + plus how many are there in this order */}
-                      <div>
-                        <div className="flex min-w-0 gap-x-4">
-                          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
-                            <img
-                              src={order.items[0].product.thumbnail}
-                              alt={order.items[0].product.title}
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                          <div className="ml-5">
-                            <p className="text-sm font-semibold leading-6 text-gray-900">
-                              {order.items[0].product.title}
-                            </p>
-                            {order.items.length > 1 && (
-                              <p className="mt-1 truncate text-sm leading-5 text-gray-500">
-                                + {order.items.length - 1}
+                {orders?.map((order) => (
+                  <>
+                    <Link to={`/order-details/${order.id}`}>
+                      <li
+                        key={order.id}
+                        className="flex justify-between rounded-2xl items-center mb-2 p-3 bg-white shadow border border-[#dbdbdb] hover:shadow-lg hover:pointer-cursor "
+                      >
+                        {/* Show first item + plus how many are there in this order */}
+                        <div>
+                          <div className="flex min-w-0 gap-x-4">
+                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
+                              <img
+                                src={order.items[0].product.thumbnail}
+                                alt={order.items[0].product.title}
+                                className="h-full w-full object-cover object-center"
+                              />
+                            </div>
+                            <div className="ml-5">
+                              <p className="text-sm font-semibold leading-6 text-gray-900">
+                                {order.items[0].product.title}
                               </p>
-                            )}
+                              {order.items.length > 1 && (
+                                <p className="mt-1 truncate text-sm leading-5 text-gray-500">
+                                  + {order.items.length - 1}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Show total Price here */}
-                      <div>
-                        <div className="">
-                          <p className="text-sm font-semibold leading-6 text-gray-900">
-                            ₹ {order.priceDetails.toPay}
-                          </p>
+                        {/* Show total Price here */}
+                        <div>
+                          <div className="">
+                            <p className="text-sm font-semibold leading-6 text-gray-900">
+                              ₹ {order.priceDetails.toPay}
+                            </p>
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Show order status here */}
-                      <div>
-                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                          <p className="text-sm leading-6 text-gray-900">
-                            {order.status}
-                          </p>
+                        {/* Show order status here */}
+                        <div>
+                          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                            <p className="text-sm leading-6 text-gray-900">
+                              {order.status}
+                            </p>
 
-                          {/* <p className="mt-1 text-xs leading-5 text-gray-500">
+                            {/* <p className="mt-1 text-xs leading-5 text-gray-500">
                                                 Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
                                             </p>
                                        */}
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  </Link>
-                </>
-              ))}
-            </ul>
+                      </li>
+                    </Link>
+                  </>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
 
